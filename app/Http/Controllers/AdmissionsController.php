@@ -96,7 +96,7 @@ class AdmissionsController extends Controller
     public function scholarshipShow(string $slug)
     {
         $scholarship = Scholarship::active()->where('slug', $slug)->firstOrFail();
-        return view('admissions.scholarship-show', compact('scholarship'));
+        return view('admissions.scholarships', compact('scholarship'));
     }
 
     /**

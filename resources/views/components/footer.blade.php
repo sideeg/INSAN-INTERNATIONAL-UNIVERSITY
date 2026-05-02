@@ -10,7 +10,6 @@ $quickLinks = [
     ['label' => 'Contact', 'route' => 'contact'],
 ];
 
-// Replaced empty links with useful, existing academic and university routes
 $academicLinks = [
     ['label' => 'Academic Programmes', 'route' => 'programmes'],
     ['label' => 'Academic Calendar', 'route' => 'admissions.calendar'],
@@ -19,7 +18,6 @@ $academicLinks = [
     ['label' => 'Photo & Video Gallery', 'route' => 'gallery'],
 ];
 
-// Fixed routes for all admission-related pages
 $admissionLinks = [
     ['label' => 'How to Apply', 'route' => 'apply'],
     ['label' => 'Admission Requirements', 'route' => 'admissions'],
@@ -113,12 +111,12 @@ $socialLinks = [
                 <div class="flex flex-wrap items-center gap-6 text-gray-400 text-sm">
                     <div class="flex items-center gap-2 hover:text-gold-500 transition-colors">
                         <i class="fas fa-map-marker-alt text-gold-500"></i>
-                        <span>{{ config('university.address', 'P.O. Box 12345, Khartoum, Sudan') }}</span>
+                        <span>{{ config('university.address', 'Plot No. 23 - 25, Old Kampala. P.O. Box 72568, Kampala - Uganda') }}</span>
                     </div>
                     <div class="flex items-center gap-2 hover:text-gold-500 transition-colors">
-                        <a href="tel:{{ config('university.phone', '+249 123 456 789') }}">
+                        <a href="tel:{{ config('university.phone_clean', '+256414675299') }}">
                             <i class="fas fa-phone text-gold-500 mr-1"></i>
-                            <span>{{ config('university.phone', '+249 123 456 789') }}</span>
+                            <span>{{ config('university.phone', '+256 (0) 414 675 299') }}</span>
                         </a>
                     </div>
                     <div class="flex items-center gap-2 hover:text-gold-500 transition-colors">

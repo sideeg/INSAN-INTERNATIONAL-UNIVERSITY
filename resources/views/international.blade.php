@@ -44,8 +44,9 @@
             </div>
             <div class="scroll-reveal relative">
                 <div class="absolute -inset-4 border-2 border-gold-500/30 rounded-3xl transform -rotate-3"></div>
-                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800&q=80" 
-                     alt="Diverse Students" class="relative rounded-2xl shadow-2xl w-full h-[450px] object-cover">
+                {{-- Updated Image: Student with Hijab --}}
+                <img src="https://images.unsplash.com/photo-1507537509458-b8312d35a233?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                     alt="International Student" class="relative rounded-2xl shadow-2xl w-full h-[450px] object-cover object-top">
             </div>
         </div>
     </div>
@@ -191,7 +192,8 @@
             
             <div class="text-center group scroll-reveal" style="transition-delay: 0.2s">
                 <div class="overflow-hidden rounded-2xl mb-6">
-                    <img src="https://images.unsplash.com/photo-1461896836934-voices?w=600&q=80" alt="Sports" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                    {{-- Updated Image: Sports & Athletics --}}
+                    <img src="https://images.unsplash.com/photo-1511886929837-354d827aae26?w=600&q=80" alt="Sports" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
                 <h3 class="font-serif text-xl font-bold text-navy-900 mb-2">Sports & Well-being</h3>
                 <p class="text-gray-500 text-sm">Engage in various sports and wellness activities designed to keep you physically and mentally fit.</p>
@@ -199,7 +201,8 @@
             
             <div class="text-center group scroll-reveal" style="transition-delay: 0.3s">
                 <div class="overflow-hidden rounded-2xl mb-6">
-                    <img src="https://images.unsplash.com/photo-1593113580332-ce288a9ff04d?w=600&q=80" alt="Outreach" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                    {{-- Updated Image: Community Outreach & Volunteering --}}
+                    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80" alt="Outreach" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
                 <h3 class="font-serif text-xl font-bold text-navy-900 mb-2">Community Outreach</h3>
                 <p class="text-gray-500 text-sm">Participate in local community programs to give back, connect with locals, and broaden your horizon.</p>

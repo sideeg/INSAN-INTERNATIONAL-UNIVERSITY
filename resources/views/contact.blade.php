@@ -18,7 +18,7 @@
     'height' => '400px'
 ])
 
-{{-- 2. Quick Contact Cards (Overlapping Hero slightly for modern look) --}}
+{{-- 2. Quick Contact Cards --}}
 <div class="relative -mt-16 z-20 mb-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -29,7 +29,7 @@
                 </div>
                 <h3 class="font-serif font-bold text-navy-900 mb-2">Main Campus</h3>
                 <p class="text-sm text-gray-500 leading-relaxed">
-                    {{ config('university.address', 'P.O. Box 12345, Khartoum, Sudan') }}
+                    {{ config('university.address', 'Plot No. 23 - 25, Old Kampala. P.O. Box 72568, Kampala - Uganda') }}
                 </p>
             </div>
 
@@ -39,10 +39,10 @@
                 </div>
                 <h3 class="font-serif font-bold text-navy-900 mb-2">Call Us</h3>
                 <p class="text-sm text-gray-500 leading-relaxed">
-                    <a href="tel:{{ config('university.phone', '+249123456789') }}" class="hover:text-gold-600 transition-colors">
-                        {{ config('university.phone', '+249 123 456 789') }}
+                    <a href="tel:{{ config('university.phone_clean', '+256414675299') }}" class="hover:text-gold-600 transition-colors">
+                        {{ config('university.phone', '+256 (0) 414 675 299') }}
                     </a><br>
-                    <span class="text-xs text-gray-400">Sun-Thu, 8:00 AM - 4:00 PM</span>
+                    <span class="text-xs text-gray-400">Mon-Fri, 8:00 AM - 5:00 PM</span>
                 </p>
             </div>
 
@@ -175,11 +175,10 @@
             {{-- Right Column: Map & Extra Info --}}
             <div class="lg:col-span-2 space-y-8 scroll-reveal" style="transition-delay: 0.2s">
                 
-                {{-- Map Embed --}}
+                {{-- Map Embed (Uganda National Mosque, Old Kampala) --}}
                 <div class="bg-white p-2 rounded-2xl shadow-sm border border-gray-100 h-[300px] overflow-hidden relative group">
-                    {{-- Note: Replace the src with your actual Google Maps embed URL for Khartoum or the exact campus location --}}
                     <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d122691.54710186178!2d32.441999994646794!3d15.551772990977823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x168e8f85f1c42289%3A0xb3bd72c72251edcc!2sKhartoum%2C%20Sudan!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.752317180145!2d32.5683938!3d0.3169874!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbc80ca7b6a4f%3A0xc3b5ea3f4585c21f!2sUganda%20National%20Mosque!5e0!3m2!1sen!2sug!4v1715000000000!5m2!1sen!2sug" 
                         class="w-full h-full rounded-xl grayscale group-hover:grayscale-0 transition-all duration-500" 
                         style="border:0;" 
                         allowfullscreen="" 

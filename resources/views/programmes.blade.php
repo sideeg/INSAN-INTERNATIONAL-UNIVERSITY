@@ -1,6 +1,11 @@
+{{-- resources/views/programmes.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Academic Programmes & Pathways | INSAN International University')
+
+@php
+    $getImage = fn($path) => $path ? (Str::startsWith($path, ['http://', 'https://']) ? $path : asset('storage/' . $path)) : asset('images/placeholder.jpg');
+@endphp
 
 @section('content')
 
@@ -78,36 +83,31 @@
                 <p class="text-gray-600">Four-year bachelor's degree programmes across 8 faculties, combining theoretical knowledge with practical skills.</p>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach($undergraduateProgrammes ?? [
-                    ['id' => 'csit', 'icon' => 'fa-laptop-code', 'badge' => 'BSc (Hons)', 'title' => 'Computer Science & Information Technology', 'desc' => 'Develop expertise in software engineering, data science, cybersecurity, and artificial intelligence with hands-on laboratory training.', 'duration' => '4 Years', 'credits' => '140 Credits', 'students' => '120 Students'],
-                    ['id' => 'islamic', 'icon' => 'fa-mosque', 'badge' => 'BA (Hons)', 'title' => 'Islamic Studies & Arabic Language', 'desc' => 'Comprehensive study of Islamic theology, jurisprudence, Quranic sciences, and classical Arabic linguistics and literature.', 'duration' => '4 Years', 'credits' => '132 Credits', 'students' => '200 Students'],
-                    ['id' => 'law', 'icon' => 'fa-balance-scale', 'badge' => 'LLB (Hons)', 'title' => 'Law & Legal Studies', 'desc' => 'Rigorous training in national and international law, Islamic jurisprudence, constitutional law, and legal research methodologies.', 'duration' => '4 Years', 'credits' => '145 Credits', 'students' => '85 Students'],
-                    ['id' => 'business', 'icon' => 'fa-chart-line', 'badge' => 'BBA (Hons)', 'title' => 'Business Administration & Management', 'desc' => 'Build leadership and management capabilities with specialisations in finance, marketing, entrepreneurship, and human resources.', 'duration' => '4 Years', 'credits' => '138 Credits', 'students' => '180 Students'],
-                    ['id' => 'medicine', 'icon' => 'fa-heartbeat', 'badge' => 'BSc (Hons)', 'title' => 'Medicine & Health Sciences', 'desc' => 'Comprehensive medical education with clinical rotations, modern laboratory facilities, and community health practicum experience.', 'duration' => '6 Years', 'credits' => '220 Credits', 'students' => '95 Students'],
-                    ['id' => 'engineering', 'icon' => 'fa-flask', 'badge' => 'BSc (Hons)', 'title' => 'Engineering & Applied Sciences', 'desc' => 'Specialisations in civil, electrical, mechanical, and chemical engineering with state-of-the-art workshops and research labs.', 'duration' => '5 Years', 'credits' => '160 Credits', 'students' => '110 Students'],
-                ] as $programme)
-                    <div class="programme-card bg-white rounded-2xl overflow-hidden scroll-reveal" data-type="undergraduate" style="transition-delay: {{ $loop->index % 3 * 0.1 }}s">
+                @forelse($undergraduateProgrammes as $programme)
+                    <div class="programme-card bg-white rounded-2xl overflow-hidden scroll-reveal" data-type="undergraduate">
                         <div class="h-2 bg-gradient-to-r from-gold-500 to-gold-400"></div>
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-4">
                                 <div class="card-icon w-14 h-14 rounded-xl bg-navy-900/5 flex items-center justify-center text-navy-900">
-                                    <i class="fas {{ $programme['icon'] }} text-xl"></i>
+                                    <i class="fas {{ $programme->icon ?? 'fa-graduation-cap' }} text-xl"></i>
                                 </div>
-                                <span class="badge px-3 py-1 rounded-full text-xs font-semibold text-gold-600">{{ $programme['badge'] }}</span>
+                                <span class="badge px-3 py-1 rounded-full text-xs font-semibold text-gold-600">{{ $programme->badge }}</span>
                             </div>
-                            <h3 class="font-serif text-xl text-navy-900 font-bold mb-2">{{ $programme['title'] }}</h3>
-                            <p class="text-gray-500 text-sm mb-4 leading-relaxed">{{ $programme['desc'] }}</p>
+                            <h3 class="font-serif text-xl text-navy-900 font-bold mb-2">{{ $programme->title }}</h3>
+                            <p class="text-gray-500 text-sm mb-4 leading-relaxed line-clamp-3">{{ $programme->description }}</p>
                             <div class="flex items-center gap-4 text-xs text-gray-400 mb-4">
-                                <span class="flex items-center gap-1"><i class="fas fa-clock text-gold-500"></i> {{ $programme['duration'] }}</span>
-                                <span class="flex items-center gap-1"><i class="fas fa-book text-gold-500"></i> {{ $programme['credits'] }}</span>
-                                <span class="flex items-center gap-1"><i class="fas fa-users text-gold-500"></i> {{ $programme['students'] }}</span>
+                                <span class="flex items-center gap-1"><i class="fas fa-clock text-gold-500"></i> {{ $programme->duration }}</span>
+                                <span class="flex items-center gap-1"><i class="fas fa-book text-gold-500"></i> {{ $programme->credits }}</span>
+                                <span class="flex items-center gap-1"><i class="fas fa-calendar-check text-gold-500"></i> Intake: {{ $programme->intake }}</span>
                             </div>
-                            <button onclick="openModal('{{ $programme['id'] }}')" class="w-full py-3 rounded-lg border-2 border-navy-900 text-navy-900 font-semibold text-sm hover:bg-navy-900 hover:text-white transition-all flex items-center justify-center gap-2">
+                            <button onclick="openModal('{{ $programme->slug }}')" class="w-full py-3 rounded-lg border-2 border-navy-900 text-navy-900 font-semibold text-sm hover:bg-navy-900 hover:text-white transition-all flex items-center justify-center gap-2">
                                 View Programme Details <i class="fas fa-arrow-right text-xs"></i>
                             </button>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-span-full text-center py-8 text-gray-500">No undergraduate programmes available.</div>
+                @endforelse
             </div>
         </div>
 
@@ -118,36 +118,31 @@
                 <p class="text-gray-600">Advanced master's and doctoral programmes for researchers, professionals, and academics seeking specialised expertise.</p>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach($graduateProgrammes ?? [
-                    ['id' => 'msc-ds', 'icon' => 'fa-brain', 'badge' => 'MSc', 'title' => 'Data Science & Artificial Intelligence', 'desc' => 'Advanced study in machine learning, deep learning, big data analytics, and intelligent systems design with industry collaboration.', 'duration' => '2 Years', 'credits' => '36 Credits', 'students' => '45 Students'],
-                    ['id' => 'ma-islamic', 'icon' => 'fa-mosque', 'badge' => 'MA / PhD', 'title' => 'Advanced Islamic Studies', 'desc' => 'Specialised research in Islamic philosophy, comparative religion, contemporary Islamic thought, and Quranic hermeneutics.', 'duration' => '2-4 Years', 'credits' => '36-60 Credits', 'students' => '60 Students'],
-                    ['id' => 'mba', 'icon' => 'fa-briefcase', 'badge' => 'MBA', 'title' => 'Master of Business Administration', 'desc' => 'Executive-level business education with concentrations in strategic management, international business, and Islamic finance.', 'duration' => '18 Months', 'credits' => '48 Credits', 'students' => '75 Students'],
-                    ['id' => 'mph', 'icon' => 'fa-stethoscope', 'badge' => 'MSc / MD', 'title' => 'Public Health & Epidemiology', 'desc' => 'Research-focused programme in disease prevention, health policy, biostatistics, and global health management.', 'duration' => '2 Years', 'credits' => '40 Credits', 'students' => '35 Students'],
-                    ['id' => 'llm', 'icon' => 'fa-landmark', 'badge' => 'LLM / PhD', 'title' => 'International Law & Human Rights', 'desc' => 'Advanced legal studies in international arbitration, human rights law, comparative constitutional law, and diplomatic law.', 'duration' => '2-4 Years', 'credits' => '36-60 Credits', 'students' => '40 Students'],
-                    ['id' => 'meng', 'icon' => 'fa-cogs', 'badge' => 'MEng / PhD', 'title' => 'Sustainable Engineering', 'desc' => 'Research programme in renewable energy systems, green building technology, environmental engineering, and sustainable design.', 'duration' => '2-4 Years', 'credits' => '36-60 Credits', 'students' => '30 Students'],
-                ] as $programme)
-                    <div class="programme-card bg-white rounded-2xl overflow-hidden scroll-reveal" data-type="graduate" style="transition-delay: {{ $loop->index % 3 * 0.1 }}s">
+                @forelse($graduateProgrammes as $programme)
+                    <div class="programme-card bg-white rounded-2xl overflow-hidden scroll-reveal" data-type="graduate">
                         <div class="h-2 bg-gradient-to-r from-navy-900 to-navy-700"></div>
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-4">
                                 <div class="card-icon w-14 h-14 rounded-xl bg-navy-900/5 flex items-center justify-center text-navy-900">
-                                    <i class="fas {{ $programme['icon'] }} text-xl"></i>
+                                    <i class="fas {{ $programme->icon ?? 'fa-user-graduate' }} text-xl"></i>
                                 </div>
-                                <span class="badge px-3 py-1 rounded-full text-xs font-semibold text-navy-900 bg-navy-900/10">{{ $programme['badge'] }}</span>
+                                <span class="badge px-3 py-1 rounded-full text-xs font-semibold text-navy-900 bg-navy-900/10">{{ $programme->badge }}</span>
                             </div>
-                            <h3 class="font-serif text-xl text-navy-900 font-bold mb-2">{{ $programme['title'] }}</h3>
-                            <p class="text-gray-500 text-sm mb-4 leading-relaxed">{{ $programme['desc'] }}</p>
+                            <h3 class="font-serif text-xl text-navy-900 font-bold mb-2">{{ $programme->title }}</h3>
+                            <p class="text-gray-500 text-sm mb-4 leading-relaxed line-clamp-3">{{ $programme->description }}</p>
                             <div class="flex items-center gap-4 text-xs text-gray-400 mb-4">
-                                <span class="flex items-center gap-1"><i class="fas fa-clock text-gold-500"></i> {{ $programme['duration'] }}</span>
-                                <span class="flex items-center gap-1"><i class="fas fa-book text-gold-500"></i> {{ $programme['credits'] }}</span>
-                                <span class="flex items-center gap-1"><i class="fas fa-users text-gold-500"></i> {{ $programme['students'] }}</span>
+                                <span class="flex items-center gap-1"><i class="fas fa-clock text-gold-500"></i> {{ $programme->duration }}</span>
+                                <span class="flex items-center gap-1"><i class="fas fa-book text-gold-500"></i> {{ $programme->credits }}</span>
+                                <span class="flex items-center gap-1"><i class="fas fa-calendar-check text-gold-500"></i> Intake: {{ $programme->intake }}</span>
                             </div>
-                            <button onclick="openModal('{{ $programme['id'] }}')" class="w-full py-3 rounded-lg border-2 border-navy-900 text-navy-900 font-semibold text-sm hover:bg-navy-900 hover:text-white transition-all flex items-center justify-center gap-2">
+                            <button onclick="openModal('{{ $programme->slug }}')" class="w-full py-3 rounded-lg border-2 border-navy-900 text-navy-900 font-semibold text-sm hover:bg-navy-900 hover:text-white transition-all flex items-center justify-center gap-2">
                                 View Programme Details <i class="fas fa-arrow-right text-xs"></i>
                             </button>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-span-full text-center py-8 text-gray-500">No graduate programmes available.</div>
+                @endforelse
             </div>
         </div>
 
@@ -158,36 +153,31 @@
                 <p class="text-gray-600">Professional certificates, diplomas, and short courses designed for career advancement and lifelong learning.</p>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach($continuingProgrammes ?? [
-                    ['id' => 'pmp', 'icon' => 'fa-certificate', 'badge' => 'Certificate', 'title' => 'Project Management Professional (PMP)', 'desc' => 'Industry-recognised certification preparing professionals for leadership roles in project planning, execution, and delivery across sectors.', 'duration' => '12 Weeks', 'credits' => '120 Hours', 'students' => '50 Students'],
-                    ['id' => 'webdev', 'icon' => 'fa-code', 'badge' => 'Diploma', 'title' => 'Full-Stack Web Development', 'desc' => 'Intensive hands-on training in modern web technologies including React, Node.js, databases, cloud deployment, and DevOps practices.', 'duration' => '6 Months', 'credits' => '240 Hours', 'students' => '65 Students'],
-                    ['id' => 'arabic', 'icon' => 'fa-language', 'badge' => 'Certificate', 'title' => 'Arabic Language Proficiency', 'desc' => 'Structured programme from beginner to advanced levels, covering classical Arabic, modern standard Arabic, and professional communication.', 'duration' => '16 Weeks', 'credits' => '160 Hours', 'students' => '80 Students'],
-                    ['id' => 'islamic-finance', 'icon' => 'fa-chart-pie', 'badge' => 'Diploma', 'title' => 'Islamic Banking & Finance', 'desc' => 'Comprehensive understanding of Sharia-compliant financial instruments, risk management, and Islamic capital markets for finance professionals.', 'duration' => '8 Months', 'credits' => '200 Hours', 'students' => '55 Students'],
-                    ['id' => 'design', 'icon' => 'fa-palette', 'badge' => 'Certificate', 'title' => 'Digital Design & Multimedia', 'desc' => 'Creative skills in graphic design, UI/UX design, video production, and motion graphics using industry-standard software and tools.', 'duration' => '10 Weeks', 'credits' => '100 Hours', 'students' => '40 Students'],
-                    ['id' => 'healthcare', 'icon' => 'fa-first-aid', 'badge' => 'Diploma', 'title' => 'Healthcare Administration', 'desc' => 'Management skills for healthcare settings including hospital administration, health informatics, quality assurance, and patient care systems.', 'duration' => '6 Months', 'credits' => '180 Hours', 'students' => '35 Students'],
-                ] as $programme)
-                    <div class="programme-card bg-white rounded-2xl overflow-hidden scroll-reveal" data-type="continuing" style="transition-delay: {{ $loop->index % 3 * 0.1 }}s">
+                @forelse($continuingProgrammes as $programme)
+                    <div class="programme-card bg-white rounded-2xl overflow-hidden scroll-reveal" data-type="continuing">
                         <div class="h-2 bg-gradient-to-r from-gold-600 to-gold-400"></div>
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-4">
                                 <div class="card-icon w-14 h-14 rounded-xl bg-gold-500/10 flex items-center justify-center text-gold-600">
-                                    <i class="fas {{ $programme['icon'] }} text-xl"></i>
+                                    <i class="fas {{ $programme->icon ?? 'fa-certificate' }} text-xl"></i>
                                 </div>
-                                <span class="badge px-3 py-1 rounded-full text-xs font-semibold text-gold-700 bg-gold-500/10">{{ $programme['badge'] }}</span>
+                                <span class="badge px-3 py-1 rounded-full text-xs font-semibold text-gold-700 bg-gold-500/10">{{ $programme->badge }}</span>
                             </div>
-                            <h3 class="font-serif text-xl text-navy-900 font-bold mb-2">{{ $programme['title'] }}</h3>
-                            <p class="text-gray-500 text-sm mb-4 leading-relaxed">{{ $programme['desc'] }}</p>
+                            <h3 class="font-serif text-xl text-navy-900 font-bold mb-2">{{ $programme->title }}</h3>
+                            <p class="text-gray-500 text-sm mb-4 leading-relaxed line-clamp-3">{{ $programme->description }}</p>
                             <div class="flex items-center gap-4 text-xs text-gray-400 mb-4">
-                                <span class="flex items-center gap-1"><i class="fas fa-clock text-gold-500"></i> {{ $programme['duration'] }}</span>
-                                <span class="flex items-center gap-1"><i class="fas fa-book text-gold-500"></i> {{ $programme['credits'] }}</span>
-                                <span class="flex items-center gap-1"><i class="fas fa-users text-gold-500"></i> {{ $programme['students'] }}</span>
+                                <span class="flex items-center gap-1"><i class="fas fa-clock text-gold-500"></i> {{ $programme->duration }}</span>
+                                <span class="flex items-center gap-1"><i class="fas fa-book text-gold-500"></i> {{ $programme->credits }}</span>
+                                <span class="flex items-center gap-1"><i class="fas fa-calendar-check text-gold-500"></i> Intake: {{ $programme->intake }}</span>
                             </div>
-                            <button onclick="openModal('{{ $programme['id'] }}')" class="w-full py-3 rounded-lg border-2 border-navy-900 text-navy-900 font-semibold text-sm hover:bg-navy-900 hover:text-white transition-all flex items-center justify-center gap-2">
+                            <button onclick="openModal('{{ $programme->slug }}')" class="w-full py-3 rounded-lg border-2 border-navy-900 text-navy-900 font-semibold text-sm hover:bg-navy-900 hover:text-white transition-all flex items-center justify-center gap-2">
                                 View Programme Details <i class="fas fa-arrow-right text-xs"></i>
                             </button>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-span-full text-center py-8 text-gray-500">No continuing education programmes available.</div>
+                @endforelse
             </div>
         </div>
     </div>
@@ -301,35 +291,9 @@
 @endsection
 
 @section('page-scripts')
-@php
-    // Fallback data just in case the controller doesn't pass anything yet
-    $defaultProgrammeData = [
-        'csit' => [
-            'title' => 'Computer Science & Information Technology',
-            'type' => 'BSc (Hons) - Undergraduate',
-            'icon' => 'fa-laptop-code',
-            'description' => 'The BSc (Hons) in Computer Science and Information Technology is a comprehensive four-year programme designed to produce skilled software engineers, data scientists, and IT professionals.',
-            'duration' => '4 Years (8 Semesters)',
-            'credits' => '140 Credits',
-            'intake' => 'September & February',
-            'requirements' => [
-                'Secondary School Certificate with minimum 70% in Mathematics and Physics',
-                'English Language proficiency (IELTS 6.0 or equivalent)'
-            ],
-            'fees' => [
-                ['label' => 'Total Programme Cost', 'value' => '$20,600 USD'],
-            ],
-            'modules' => [
-                'Introduction to Programming & Algorithms',
-                'Artificial Intelligence & Machine Learning'
-            ],
-        ],
-    ];
-@endphp
-
 <script>
-    // 1. Safely inject PHP data into JavaScript
-    const programmeData = @json($programmeData ?? $defaultProgrammeData);
+    // 1. Safely inject PHP data into JavaScript from the Controller
+    const programmeData = @json($programmeData ?? []);
 
     // 2. Modal Logic
     function openModal(programmeId) {

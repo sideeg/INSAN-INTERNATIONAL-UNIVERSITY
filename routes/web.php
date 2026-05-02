@@ -11,6 +11,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\CampusLifeController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AdmissionsController;
 /*
 |--------------------------------------------------------------------------
 | INSAN International University Routes
@@ -25,8 +26,35 @@ Route::get('/academics/programmes', [ProgrammeController::class, 'index'])->name
 Route::get('/academics/programmes/{slug}', [ProgrammeController::class, 'show'])->name('programmes.show');
 
 // Admissions
-Route::get('/admissions', [HomeController::class, 'admissions'])->name('admissions');
-Route::get('/apply', [HomeController::class, 'apply'])->name('apply');
+Route::prefix('admissions')->name('admissions')->group(function () {
+ 
+    // Main admissions landing
+    Route::get('/', [AdmissionsController::class, 'index'])
+        ->name('');                                  // route: 'admissions'
+ 
+    // Academic Calendar
+    Route::get('/calendar', [AdmissionsController::class, 'calendar'])
+        ->name('.calendar');                         // route: 'admissions.calendar'
+ 
+    Route::get('/calendar/export', [AdmissionsController::class, 'calendarExport'])
+        ->name('.calendar.export');                  // route: 'admissions.calendar.export'
+ 
+    // Fees & Funding
+    Route::get('/fees', [AdmissionsController::class, 'fees'])
+        ->name('.fees');                             // route: 'admissions.fees'
+ 
+    // Scholarships index
+    Route::get('/scholarships', [AdmissionsController::class, 'scholarships'])
+        ->name('.scholarships');                     // route: 'admissions.scholarships'
+ 
+    // Individual scholarship (slug-based)
+    Route::get('/scholarships/{slug}', [AdmissionsController::class, 'scholarshipShow'])
+        ->name('.scholarships.show');                // route: 'admissions.scholarships.show'
+});
+ 
+// Apply page (top-level, kept as is for direct CTA links)
+Route::get('/apply', [AdmissionsController::class, 'apply'])->name('apply');
+
 
 // International
 Route::get('/international-students', [HomeController::class, 'international'])->name('international');

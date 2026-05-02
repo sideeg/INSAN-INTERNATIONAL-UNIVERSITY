@@ -301,9 +301,8 @@
 @endsection
 
 @section('page-scripts')
-<script>
-    // Programme data - In production, fetch from API/database
-   @php
+@php
+    // Fallback data just in case the controller doesn't pass anything yet
     $defaultProgrammeData = [
         'csit' => [
             'title' => 'Computer Science & Information Technology',
@@ -315,71 +314,70 @@
             'intake' => 'September & February',
             'requirements' => [
                 'Secondary School Certificate with minimum 70% in Mathematics and Physics',
-                'English Language proficiency (IELTS 6.0 or equivalent)',
-                'Pass in INSAN Entrance Examination',
-                'Personal interview with the Faculty Dean',
+                'English Language proficiency (IELTS 6.0 or equivalent)'
             ],
             'fees' => [
-                ['label' => 'Tuition per Semester', 'value' => '$2,500 USD'],
-                ['label' => 'Registration Fee', 'value' => '$150 USD (one-time)'],
-                ['label' => 'Laboratory Fee', 'value' => '$300 USD per year'],
                 ['label' => 'Total Programme Cost', 'value' => '$20,600 USD'],
             ],
             'modules' => [
                 'Introduction to Programming & Algorithms',
-                'Data Structures & Object-Oriented Design',
-                'Database Management Systems',
-                'Computer Networks & Security',
-                'Artificial Intelligence & Machine Learning',
-                'Software Engineering & Project Management',
-                'Cloud Computing & Distributed Systems',
-                'Capstone Project & Industry Internship',
+                'Artificial Intelligence & Machine Learning'
             ],
         ],
     ];
 @endphp
 
 <script>
-    const programmeData = {{ Illuminate\Support\Js::from($programmeData ?? $defaultProgrammeData) }};
-</script>
+    // 1. Safely inject PHP data into JavaScript
+    const programmeData = @json($programmeData ?? $defaultProgrammeData);
 
-
+    // 2. Modal Logic
     function openModal(programmeId) {
         const data = programmeData[programmeId];
-        if (!data) return;
+        if (!data) {
+            console.error('Programme data not found for ID:', programmeId);
+            return;
+        }
         
-        document.getElementById('modalTitle').textContent = data.title;
-        document.getElementById('modalType').textContent = data.type;
-        document.getElementById('modalDescription').textContent = data.description;
-        document.getElementById('modalDuration').textContent = data.duration;
-        document.getElementById('modalCredits').textContent = data.credits;
-        document.getElementById('modalIntake').textContent = data.intake;
+        // Text Content
+        document.getElementById('modalTitle').textContent = data.title || '';
+        document.getElementById('modalType').textContent = data.type || '';
+        document.getElementById('modalDescription').textContent = data.description || '';
+        document.getElementById('modalDuration').textContent = data.duration || '-';
+        document.getElementById('modalCredits').textContent = data.credits || '-';
+        document.getElementById('modalIntake').textContent = data.intake || '-';
         
-        document.getElementById('modalIcon').className = `fas ${data.icon} text-xl`;
+        // Icon
+        document.getElementById('modalIcon').className = `fas ${data.icon || 'fa-graduation-cap'} text-xl`;
         
-        document.getElementById('modalRequirements').innerHTML = data.requirements.map(req => 
+        // Arrays (Requirements, Fees, Modules) mapped to HTML
+        const reqs = data.requirements || [];
+        document.getElementById('modalRequirements').innerHTML = reqs.length ? reqs.map(req => 
             `<li class="flex items-start gap-3 p-3 rounded-lg bg-gray-50">
                 <i class="fas fa-check-circle text-gold-500 mt-0.5 flex-shrink-0"></i>
                 <span class="text-gray-600 text-sm">${req}</span>
             </li>`
-        ).join('');
+        ).join('') : '<p class="text-sm text-gray-500">No specific requirements listed.</p>';
         
-        document.getElementById('modalFees').innerHTML = data.fees.map(fee => 
+        const fees = data.fees || [];
+        document.getElementById('modalFees').innerHTML = fees.length ? fees.map(fee => 
             `<div class="flex justify-between items-center p-3 border-b border-gray-100 last:border-0">
-                <span class="text-gray-600 text-sm">${fee.label}</span>
-                <span class="font-bold text-navy-900">${fee.value}</span>
+                <span class="text-gray-600 text-sm">${fee.label || fee.name}</span>
+                <span class="font-bold text-navy-900">${fee.value || fee.amount}</span>
             </div>`
-        ).join('');
+        ).join('') : '<p class="text-sm text-gray-500">Fee information unavailable.</p>';
         
-        document.getElementById('modalModules').innerHTML = data.modules.map(mod => 
+        const modules = data.modules || [];
+        document.getElementById('modalModules').innerHTML = modules.length ? modules.map(mod => 
             `<div class="flex items-center gap-3 p-3 rounded-lg bg-navy-900/5">
                 <i class="fas fa-book-open text-gold-500 text-sm"></i>
                 <span class="text-navy-900 text-sm font-medium">${mod}</span>
             </div>`
-        ).join('');
+        ).join('') : '<p class="text-sm text-gray-500">Module information unavailable.</p>';
         
+        // Show Modal
         document.getElementById('programmeModal').classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
     }
 
     function closeModal() {
@@ -387,33 +385,57 @@
         document.body.style.overflow = '';
     }
 
-    // Search functionality
+    // 3. Search functionality
     document.getElementById('searchInput')?.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase();
+        
         document.querySelectorAll('.programme-card').forEach(card => {
             const title = card.querySelector('h3').textContent.toLowerCase();
             const desc = card.querySelector('p').textContent.toLowerCase();
-            card.style.display = (title.includes(query) || desc.includes(query)) ? 'block' : 'none';
+            
+            if (title.includes(query) || desc.includes(query)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
         });
     });
 
-    // Filter chips
+    // 4. Filter Chips & Tab Syncing
     document.querySelectorAll('.filter-chip').forEach(chip => {
         chip.addEventListener('click', () => {
             const filter = chip.dataset.filter;
+            
+            // Highlight active chip
             document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
             
-            if (filter !== 'all') {
+            // Sync with Tabs and Content
+            if (filter === 'all') {
+                // If "All", show the first tab by default but show ALL cards
                 document.querySelectorAll('.tab-btn').forEach(b => {
                     b.classList.remove('active');
-                    b.classList.add('bg-white', 'text-navy-900', 'border', 'border-gray-200');
+                    b.classList.add('bg-white', 'text-navy-900', 'border-gray-200');
                 });
+                const firstTab = document.querySelector('.tab-btn');
+                firstTab.classList.add('active');
+                firstTab.classList.remove('bg-white', 'text-navy-900', 'border-gray-200');
+
+                // Show all tab contents to display all cards
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.add('active'));
+            } else {
+                // Handle specific category filters
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.classList.add('bg-white', 'text-navy-900', 'border-gray-200');
+                });
+                
                 const targetBtn = document.querySelector(`[data-tab="${filter}"]`);
                 if (targetBtn) {
                     targetBtn.classList.add('active');
-                    targetBtn.classList.remove('bg-white', 'text-navy-900', 'border', 'border-gray-200');
+                    targetBtn.classList.remove('bg-white', 'text-navy-900', 'border-gray-200');
                 }
+                
                 document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
                 document.getElementById(filter)?.classList.add('active');
             }

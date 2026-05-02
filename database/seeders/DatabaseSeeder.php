@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
             // InternationalServiceSeeder::class,
             // CountrySeeder::class,
             AboutSeeder::class,
+            ScholarshipSeeder::class,
+            FeesSeeder::class,
+            AcademicCalendarSeeder::class,
         ]);
     }
 }

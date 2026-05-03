@@ -21,7 +21,7 @@
             <div class="flex items-center gap-2 text-xs">
                 <a href="{{ url('?lang=ar') }}" class="text-gold-500 font-semibold cursor-pointer hover:underline">AR</a>
                 <span class="text-gray-400">|</span>
-                <span class="font-semibold">EN</span>
+                <a href="{{ url('?lang=en') }}" class="text-gold-500 font-semibold cursor-pointer hover:underline">EN</a>
             </div>
         </div>
     </div>

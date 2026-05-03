@@ -10,16 +10,19 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
-            $table->string('title');
+            $table->string('slug')->unique(); // Slug stays a string for clean URLs
+            
+            // Translatable fields converted to JSON
+            $table->json('title');
+            $table->json('location');
+            $table->json('time'); // E.g., "9 AM" vs "٩ صباحاً"
+            $table->json('description');
+            $table->json('schedule')->nullable();
+            
             $table->enum('category', ['academic', 'cultural', 'sports', 'social']);
             $table->string('thumbnail');
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('time');
-            $table->string('location');
-            $table->text('description');
-            $table->json('schedule')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

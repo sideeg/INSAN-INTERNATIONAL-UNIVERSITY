@@ -11,25 +11,18 @@ return new class extends Migration
         Schema::create('staff_profiles', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->string('title');           // e.g. "Vice Chancellor", "Pro-Chancellor"
-            $table->string('department')->nullable(); // e.g. "Office of the Vice Chancellor"
+            // Translatable fields converted to JSON
+            $table->json('name');
+            $table->json('title');           
+            $table->json('department')->nullable(); 
+            $table->json('bio')->nullable();
+            $table->json('bio_extended')->nullable(); 
+            $table->json('qualifications')->nullable(); 
 
-            // Drives which About sub-page this person appears on.
-            // 'vc'         → /about/vice-chancellor  (only one record should be active)
-            // 'governance' → /about/governance
-            // 'leadership' → /about/leadership
             $table->enum('role_type', ['vc', 'governance', 'leadership']);
-
-            $table->text('bio')->nullable();
-            $table->text('bio_extended')->nullable(); // Longer version for dedicated profile pages
-
-            $table->string('portrait')->nullable();    // Storage path, e.g. staff/portraits/vc.jpg
+            $table->string('portrait')->nullable();    
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-
-            // Academic credentials shown on governance/leadership cards
-            $table->string('qualifications')->nullable(); // e.g. "PhD (Oxford), MSc (London)"
 
             $table->unsignedSmallInteger('sort_order')->default(0);
             $table->boolean('is_active')->default(true);

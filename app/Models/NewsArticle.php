@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 use Illuminate\Support\Str;
 
 class NewsArticle extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
 
     protected $table = 'news_articles';
+
+    public $translatable = ['title', 'excerpt', 'content', 'author'];
 
     protected $fillable = [
         'slug', 'title', 'excerpt', 'content',
@@ -29,13 +32,14 @@ class NewsArticle extends Model
         parent::boot();
         static::creating(function ($model) {
             if (empty($model->slug)) {
-                $model->slug = Str::slug($model->title);
+                $englishTitle = $model->getTranslation('title', 'en', false) ?: $model->title;
+                $model->slug = Str::slug($englishTitle);
             }
         });
     }
 
     public function getDateAttribute(): string
     {
-        return $this->published_at?->format('F d, Y') ?? '';
+        return $this->published_at ? $this->published_at->translatedFormat('d F Y') : '';
     }
 }

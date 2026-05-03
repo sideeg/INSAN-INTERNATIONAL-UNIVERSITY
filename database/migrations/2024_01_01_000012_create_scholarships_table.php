@@ -10,21 +10,21 @@ return new class extends Migration
     {
         Schema::create('scholarships', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->json('name');
             $table->string('slug')->unique();
-            $table->string('tagline')->nullable();        // Short one-liner
-            $table->longText('overview');                 // Rich description
-            $table->json('benefits');                     // ["Full tuition", "Mentorship", ...]
-            $table->json('eligibility_criteria');         // ["Muslim citizen", "Academic record", ...]
-            $table->json('required_documents');           // ["Transcripts", "Recommendation letter", ...]
-            $table->json('purposes')->nullable();         // ["Support disadvantaged students", ...]
-            $table->text('application_process')->nullable();
+            $table->json('tagline')->nullable();
+            $table->json('overview');
+            $table->json('benefits');
+            $table->json('eligibility_criteria');
+            $table->json('required_documents');
+            $table->json('purposes')->nullable();
+            $table->json('application_process')->nullable();
             $table->date('application_deadline')->nullable();
-            $table->string('application_url')->nullable(); // External portal link
-            $table->string('duration')->nullable();       // "3–4 years"
+            $table->string('application_url')->nullable();
+            $table->string('duration')->nullable();
             $table->text('renewal_conditions')->nullable();
-            $table->json('impact_points')->nullable();    // Impact bullet points
-            $table->string('partner_organisation')->nullable(); // UMSC
+            $table->json('impact_points')->nullable();
+            $table->string('partner_organisation')->nullable();
             $table->string('partner_logo')->nullable();
             $table->boolean('covers_full_tuition')->default(false);
             $table->boolean('is_active')->default(true);

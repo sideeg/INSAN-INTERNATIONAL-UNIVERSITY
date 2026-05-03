@@ -11,11 +11,14 @@ return new class extends Migration
         Schema::create('news_articles', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
-            $table->string('title');
-            $table->text('excerpt');
-            $table->longText('content');
+            
+            // Translatable fields converted to JSON
+            $table->json('title');
+            $table->json('excerpt');
+            $table->json('content');
+            $table->json('author')->nullable(); 
+            
             $table->string('thumbnail');
-            $table->string('author')->default('Communications Office');
             $table->boolean('is_featured')->default(false);
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();

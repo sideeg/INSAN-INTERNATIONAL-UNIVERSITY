@@ -1,10 +1,8 @@
-{{-- resources/views/events-news.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Events, News & Gallery | INSAN International University')
+@section('title', __('Events, News & Gallery') . ' | ' . __('INSAN International University'))
 
 @php
-    // Helper to safely display images (whether from URL seeders or local storage)
     $getImage = fn($path) => $path ? (Str::startsWith($path, ['http://', 'https://']) ? $path : asset('storage/' . $path)) : asset('images/placeholder.jpg');
 @endphp
 
@@ -12,28 +10,27 @@
 
 @include('components.hero-section', [
     'backgroundImage' => 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1920&q=80',
-    'title' => 'Events, News',
-    'highlightedText' => '& Multimedia Gallery',
-    'description' => 'Stay connected with campus life. Explore upcoming events, latest news, and our visual journey through photos and videos.',
+    'title' => __('Events, News'),
+    'highlightedText' => __('& Multimedia Gallery'),
+    'description' => __('Stay connected with campus life. Explore upcoming events, latest news, and our visual journey through photos and videos.'),
     'breadcrumbs' => [
-        ['label' => 'Home', 'url' => route('home')],
-        ['label' => 'News, Events & Gallery']
+        ['label' => __('Home'), 'url' => route('home')],
+        ['label' => __('News, Events & Gallery')]
     ],
     'height' => '400px'
 ])
 
-<!-- Section Tabs -->
 <section class="bg-white border-b border-gray-200 py-6 sticky top-20 z-40 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-wrap justify-center gap-4">
             <button class="tab-btn active px-6 py-3 rounded-xl font-serif font-bold text-base flex items-center gap-2" data-tab="events">
-                <i class="fas fa-calendar-alt"></i> Upcoming Events
+                <i class="fas fa-calendar-alt"></i> {{ __('Upcoming Events') }}
             </button>
             <button class="tab-btn px-6 py-3 rounded-xl font-serif font-bold text-base flex items-center gap-2 bg-white text-navy-900 border border-gray-200" data-tab="news">
-                <i class="fas fa-newspaper"></i> Latest News
+                <i class="fas fa-newspaper"></i> {{ __('Latest News') }}
             </button>
             <button class="tab-btn px-6 py-3 rounded-xl font-serif font-bold text-base flex items-center gap-2 bg-white text-navy-900 border border-gray-200" data-tab="gallery">
-                <i class="fas fa-images"></i> Multimedia Gallery
+                <i class="fas fa-images"></i> {{ __('Multimedia Gallery') }}
             </button>
         </div>
     </div>
@@ -45,15 +42,14 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
                 <div class="scroll-reveal">
-                    <h2 class="font-serif text-3xl text-navy-900 font-bold mb-2">Upcoming Events</h2>
-                    <p class="text-gray-600">Join us for academic conferences, cultural celebrations, and community gatherings.</p>
+                    <h2 class="font-serif text-3xl text-navy-900 font-bold mb-2">{{ __('Upcoming Events') }}</h2>
+                    <p class="text-gray-600">{{ __('Join us for academic conferences, cultural celebrations, and community gatherings.') }}</p>
                 </div>
                 <div class="flex flex-wrap gap-2 scroll-reveal">
-                    <span class="filter-chip active px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-event-filter="all">All Events</span>
-                    <span class="filter-chip px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-event-filter="academic">Academic</span>
-                    <span class="filter-chip px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-event-filter="cultural">Cultural</span>
-                    <span class="filter-chip px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-event-filter="sports">Sports</span>
-                    <span class="filter-chip px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-event-filter="social">Social</span>
+                    <span class="filter-chip active px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-event-filter="all">{{ __('All Events') }}</span>
+                    <span class="filter-chip px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-event-filter="academic">{{ __('Academic') }}</span>
+                    <span class="filter-chip px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-event-filter="cultural">{{ __('Cultural') }}</span>
+                    <span class="filter-chip px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-event-filter="sports">{{ __('Sports') }}</span>
                 </div>
             </div>
 
@@ -62,23 +58,25 @@
                     <div class="event-card bg-white rounded-2xl overflow-hidden scroll-reveal" data-category="{{ strtolower($event->category) }}">
                         <div class="relative h-48 overflow-hidden">
                             <img src="{{ $getImage($event->thumbnail) }}" alt="{{ $event->title }}" class="w-full h-full object-cover">
-                            <div class="absolute top-4 left-4 date-badge text-white px-4 py-2 rounded-lg text-center shadow-lg">
-                                <div class="text-xs uppercase tracking-wider text-gold-400">{{ $event->start_date?->format('M') }}</div>
-                                <div class="text-2xl font-bold font-serif">{{ $event->start_date?->format('d') }}</div>
+                            <!-- logical positioning: start-4 instead of left-4 -->
+                            <div class="absolute top-4 start-4 date-badge text-white px-4 py-2 rounded-lg text-center shadow-lg">
+                                <div class="text-xs uppercase tracking-wider text-gold-400">{{ $event->month }}</div>
+                                <div class="text-2xl font-bold font-serif">{{ $event->day }}</div>
                             </div>
-                            <span class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-navy-900 capitalize">{{ $event->category }}</span>
+                            <!-- logical positioning: end-4 instead of right-4 -->
+                            <span class="absolute top-4 end-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-navy-900 capitalize">{{ __($event->category) }}</span>
                         </div>
                         <div class="p-6">
                             <h3 class="font-serif text-xl text-navy-900 font-bold mb-2">{{ $event->title }}</h3>
-                            <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                            <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-3">
                                 <span class="flex items-center gap-1"><i class="fas fa-clock text-gold-500"></i> {{ $event->time }}</span>
                                 <span class="flex items-center gap-1"><i class="fas fa-map-marker-alt text-gold-500"></i> {{ $event->location }}</span>
                             </div>
                             <p class="text-gray-500 text-sm mb-4 leading-relaxed line-clamp-3">{{ $event->description }}</p>
                             <div class="flex items-center justify-between">
-                                <span class="text-xs text-gray-400">Ends: {{ $event->end_date?->format('M d, Y') }}</span>
+                                <span class="text-xs text-gray-400">{{ __('Ends:') }} {{ $event->end_date?->translatedFormat('d F Y') }}</span>
                                 <button onclick="openEventModal('{{ $event->slug }}')" class="text-gold-600 font-semibold text-sm hover:text-gold-700 flex items-center gap-1">
-                                    Details <i class="fas fa-arrow-right text-xs"></i>
+                                    {{ __('Details') }} <i class="fas fa-arrow-right text-xs rtl:rotate-180"></i>
                                 </button>
                             </div>
                         </div>
@@ -86,7 +84,7 @@
                 @empty
                     <div class="col-span-full text-center py-12 text-gray-500">
                         <i class="fas fa-calendar-times text-4xl mb-3 text-gray-300"></i>
-                        <p>No upcoming events at the moment. Please check back later.</p>
+                        <p>{{ __('No upcoming events at the moment. Please check back later.') }}</p>
                     </div>
                 @endforelse
             </div>
@@ -99,17 +97,16 @@
     <section class="py-16 bg-cream">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12 scroll-reveal">
-                <h2 class="font-serif text-3xl text-navy-900 font-bold mb-2">Latest News</h2>
-                <p class="text-gray-600">Stories of achievement, innovation, and community from across our campus.</p>
+                <h2 class="font-serif text-3xl text-navy-900 font-bold mb-2">{{ __('Latest News') }}</h2>
+                <p class="text-gray-600">{{ __('Stories of achievement, innovation, and community from across our campus.') }}</p>
             </div>
 
             <div class="grid lg:grid-cols-2 gap-8 mb-12">
-                <!-- Featured News -->
                 @if($featuredNews)
                 <div class="news-card bg-white rounded-2xl overflow-hidden shadow-sm scroll-reveal">
                     <div class="relative h-64 overflow-hidden">
                         <img src="{{ $getImage($featuredNews->thumbnail) }}" alt="{{ $featuredNews->title }}" class="news-img w-full h-full object-cover">
-                        <div class="absolute bottom-4 left-4 bg-gold-500 text-white px-3 py-1 rounded-full text-xs font-semibold">Featured</div>
+                        <div class="absolute bottom-4 start-4 bg-gold-500 text-white px-3 py-1 rounded-full text-xs font-semibold">{{ __('Featured') }}</div>
                     </div>
                     <div class="p-8">
                         <div class="flex items-center gap-3 text-sm text-gray-400 mb-3">
@@ -120,21 +117,16 @@
                         <h3 class="font-serif text-2xl text-navy-900 font-bold mb-3">{{ $featuredNews->title }}</h3>
                         <p class="text-gray-600 mb-4 leading-relaxed line-clamp-3">{{ $featuredNews->excerpt }}</p>
                         <a href="{{ route('news.show', $featuredNews->slug) }}" class="inline-flex items-center gap-2 text-gold-600 font-semibold hover:text-gold-700">
-                            Read Full Story <i class="fas fa-arrow-right text-sm"></i>
+                            {{ __('Read Full Story') }} <i class="fas fa-arrow-right text-sm rtl:rotate-180"></i>
                         </a>
                     </div>
                 </div>
-                @else
-                <div class="bg-white rounded-2xl flex items-center justify-center p-8 text-gray-400">
-                    <p>No featured news available.</p>
-                </div>
                 @endif
 
-                <!-- Side News List -->
                 <div class="space-y-6">
-                    @forelse($sideNews as $news)
+                    @foreach($sideNews as $news)
                         <div class="news-card bg-white rounded-xl p-6 flex gap-4 scroll-reveal">
-                            <div class="w-32 h-24 rounded-lg overflow-hidden flex-shrink-0">
+                            <div class="w-32 h-24 rounded-lg overflow-hidden shrink-0">
                                 <img src="{{ $getImage($news->thumbnail) }}" alt="{{ $news->title }}" class="news-img w-full h-full object-cover">
                             </div>
                             <div class="flex-1">
@@ -145,28 +137,8 @@
                                 <p class="text-gray-500 text-sm line-clamp-2">{{ $news->excerpt }}</p>
                             </div>
                         </div>
-                    @empty
-                        <div class="text-center py-8 text-gray-400"><p>No recent news available.</p></div>
-                    @endforelse
+                    @endforeach
                 </div>
-            </div>
-
-            <!-- More News Grid -->
-            <div class="grid md:grid-cols-3 gap-6">
-                @foreach($gridNews as $news)
-                    <div class="news-card bg-white rounded-xl overflow-hidden scroll-reveal">
-                        <div class="h-40 overflow-hidden">
-                            <img src="{{ $getImage($news->thumbnail) }}" alt="{{ $news->title }}" class="news-img w-full h-full object-cover">
-                        </div>
-                        <div class="p-5">
-                            <div class="text-xs text-gray-400 mb-2"><i class="fas fa-calendar text-gold-500"></i> {{ $news->date }}</div>
-                            <a href="{{ route('news.show', $news->slug) }}">
-                                <h4 class="font-serif text-navy-900 font-bold mb-2 hover:text-gold-600 transition-colors line-clamp-2">{{ $news->title }}</h4>
-                            </a>
-                            <p class="text-gray-500 text-sm line-clamp-2">{{ $news->excerpt }}</p>
-                        </div>
-                    </div>
-                @endforeach
             </div>
         </div>
     </section>
@@ -347,30 +319,6 @@
 
 @section('page-scripts')
 <script>
-    // Filtering functions
-    document.querySelectorAll('[data-event-filter]').forEach(chip => {
-        chip.addEventListener('click', () => {
-            const filter = chip.dataset.eventFilter;
-            document.querySelectorAll('[data-event-filter]').forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            document.querySelectorAll('#eventsGrid .event-card').forEach(card => {
-                card.style.display = (filter === 'all' || card.dataset.category === filter) ? 'block' : 'none';
-            });
-        });
-    });
-
-    document.querySelectorAll('[data-gallery-filter]').forEach(chip => {
-        chip.addEventListener('click', () => {
-            const filter = chip.dataset.galleryFilter;
-            document.querySelectorAll('[data-gallery-filter]').forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            document.querySelectorAll('#galleryGrid .gallery-item').forEach(item => {
-                item.style.display = (filter === 'all' || item.dataset.type === filter) ? 'block' : 'none';
-            });
-        });
-    });
-
-    // Database JSON payload
     const eventData = @json($eventData ?? []);
 
     function openEventModal(eventId) {
@@ -379,7 +327,6 @@
         document.getElementById('eventModalTitle').textContent = data.title;
         document.getElementById('eventModalCategory').textContent = data.category;
         
-        // Use logic to determine if thumbnail is a full URL or storage path
         const imagePath = data.image.startsWith('http') ? data.image : `/storage/${data.image}`;
         document.getElementById('eventModalImage').src = imagePath;
         
@@ -391,41 +338,14 @@
         const schedule = data.schedule || [];
         document.getElementById('eventModalSchedule').innerHTML = schedule.length > 0 ? schedule.map(item => 
             `<li class="flex items-start gap-3 p-3 rounded-lg bg-gray-50">
-                <i class="fas fa-check-circle text-gold-500 mt-0.5 flex-shrink-0"></i>
+                <i class="fas fa-check-circle text-gold-500 mt-0.5 shrink-0"></i>
                 <span class="text-gray-600 text-sm">${item}</span>
             </li>`
-        ).join('') : '<p class="text-gray-500 text-sm italic">No specific schedule announced.</p>';
+        ).join('') : '<p class="text-gray-500 text-sm italic">{{ __("No specific schedule announced.") }}</p>';
         
         document.getElementById('eventModal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
     }
-
-    function closeEventModal() {
-        document.getElementById('eventModal').classList.add('hidden');
-        document.body.style.overflow = '';
-    }
-
-    function openVideoModal(title, url) {
-        document.getElementById('videoModalTitle').textContent = title;
-        const playUrl = url.includes('?') ? `${url}&autoplay=1` : `${url}?autoplay=1`;
-        document.getElementById('videoModalFrame').src = playUrl;
-        document.getElementById('videoModal').classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeVideoModal() {
-        document.getElementById('videoModal').classList.add('hidden');
-        document.getElementById('videoModalFrame').src = '';
-        document.body.style.overflow = '';
-    }
-
-    function openImageModal(src, caption) {
-        document.getElementById('imageModalSrc').src = src;
-        document.getElementById('imageModalCaption').textContent = caption;
-        document.getElementById('imageModal').classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    }
-
     function closeImageModal() {
         document.getElementById('imageModal').classList.add('hidden');
         document.body.style.overflow = '';

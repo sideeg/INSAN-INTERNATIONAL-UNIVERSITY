@@ -6,33 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Spatie\Translatable\HasTranslations;
 
 class StaffProfile extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasTranslations;
+
+    public $translatable = ['name', 'title', 'department', 'bio', 'bio_extended', 'qualifications'];
 
     protected $fillable = [
-        'name',
-        'title',
-        'department',
-        'role_type',
-        'bio',
-        'bio_extended',
-        'portrait',
-        'email',
-        'phone',
-        'qualifications',
-        'sort_order',
-        'is_active',
+        'name', 'title', 'department', 'role_type',
+        'bio', 'bio_extended', 'portrait',
+        'email', 'phone', 'qualifications',
+        'sort_order', 'is_active',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
     ];
-
-    // ──────────────────────────────────────────────────────
-    // Scopes
-    // ──────────────────────────────────────────────────────
 
     public function scopeActive(Builder $query): Builder
     {
@@ -41,7 +32,7 @@ class StaffProfile extends Model
 
     public function scopeOrdered(Builder $query): Builder
     {
-        return $query->orderBy('sort_order')->orderBy('name');
+        return $query->orderBy('sort_order')->orderBy('id');
     }
 
     public function scopeByRole(Builder $query, string $role): Builder
@@ -49,30 +40,20 @@ class StaffProfile extends Model
         return $query->where('role_type', $role);
     }
 
-    // ──────────────────────────────────────────────────────
-    // Accessors
-    // ──────────────────────────────────────────────────────
-
-    /**
-     * Returns the ordinal label for the role type, useful in views.
-     */
     public function getRoleLabelAttribute(): string
     {
         return match($this->role_type) {
-            'vc'         => 'Vice Chancellor',
-            'governance' => 'Governance',
-            'leadership' => 'Leadership',
-            default      => ucfirst($this->role_type),
+            'vc'         => __('Vice Chancellor'),
+            'governance' => __('Governance'),
+            'leadership' => __('Leadership'),
+            default      => ucfirst(__($this->role_type)),
         };
     }
 
-    /**
-     * Full URL to the portrait, with a sensible placeholder fallback.
-     */
     public function getPortraitUrlAttribute(): string
     {
         return $this->portrait
-            ? asset('storage/' . $this->portrait)
+            ? (str_starts_with($this->portrait, 'http') ? $this->portrait : asset('storage/' . $this->portrait))
             : asset('images/staff-placeholder.png');
     }
 }

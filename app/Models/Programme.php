@@ -1,14 +1,15 @@
 <?php
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
+use Spatie\Translatable\HasTranslations; // ADD THIS
 
 class Programme extends Model
 {
-    use HasFactory;
+    use HasTranslations; // ADD THIS
+
+    // Define the translatable columns
+    public $translatable = ['title', 'description'];
 
     protected $fillable = [
         'slug', 'title', 'type', 'category', 'icon', 'badge',
@@ -23,7 +24,6 @@ class Programme extends Model
         'modules' => 'array',
         'is_active' => 'boolean',
     ];
-
     protected static function boot()
     {
         parent::boot();

@@ -2,11 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Builder;  // ✅ ADD THIS
+use Spatie\Translatable\HasTranslations; 
 class Scholarship extends Model
 {
+    use HasFactory ,HasTranslations;
+
+     // ✅ ADD translatable array
+    public $translatable = [
+        'name', 'tagline', 'overview', 'benefits', 
+        'eligibility_criteria', 'required_documents',
+        'purposes', 'application_process', 'impact_points'
+    ];
+
     protected $fillable = [
         'name',
         'slug',
@@ -31,16 +41,21 @@ class Scholarship extends Model
     ];
 
     protected $casts = [
+        'name'                 => 'array',
+        'tagline'              => 'array',
+        'overview'             => 'array',
         'benefits'             => 'array',
         'eligibility_criteria' => 'array',
         'required_documents'   => 'array',
         'purposes'             => 'array',
+        'application_process'  => 'array',
         'impact_points'        => 'array',
-        'application_deadline' => 'date',
         'covers_full_tuition'  => 'boolean',
         'is_active'            => 'boolean',
         'is_featured'          => 'boolean',
+        'application_deadline' => 'date',
     ];
+
 
     public function scopeActive(Builder $query): Builder
     {

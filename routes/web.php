@@ -74,10 +74,10 @@ Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [HomeController::class, 'submitContact'])->name('contact.submit');
 
-// Student Portal (external)
-Route::get('/student-portal', function () {
-    return redirect('https://portal.inu.edu.sd');
-})->name('student.portal');
+// admin Portal (external)
+Route::get('/admin-portal', function () {
+    return redirect('/admin');
+})->name('admin.portal');
 
 // Newsletter
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');

@@ -321,34 +321,102 @@
 <script>
     const eventData = @json($eventData ?? []);
 
+    // Helper function to safely get DOM elements without repeating code
+    const el = (id) => document.getElementById(id);
+
+    // ========== EVENT MODAL ==========
     function openEventModal(eventId) {
         const data = eventData[eventId];
         if (!data) return;
-        document.getElementById('eventModalTitle').textContent = data.title;
-        document.getElementById('eventModalCategory').textContent = data.category;
-        
-        const imagePath = data.image.startsWith('http') ? data.image : `/storage/${data.image}`;
-        document.getElementById('eventModalImage').src = imagePath;
-        
-        document.getElementById('eventModalDate').textContent = data.date;
-        document.getElementById('eventModalTime').textContent = data.time;
-        document.getElementById('eventModalLocation').textContent = data.location;
-        document.getElementById('eventModalDesc').textContent = data.description;
-        
+
+        if (el('eventModalTitle')) el('eventModalTitle').textContent = data.title;
+        if (el('eventModalCategory')) el('eventModalCategory').textContent = data.category;
+        if (el('eventModalImage')) el('eventModalImage').src = data.image || '';
+        if (el('eventModalDate')) el('eventModalDate').textContent = data.date;
+        if (el('eventModalTime')) el('eventModalTime').textContent = data.time;
+        if (el('eventModalLocation')) el('eventModalLocation').textContent = data.location;
+        if (el('eventModalDesc')) el('eventModalDesc').textContent = data.description;
+
         const schedule = data.schedule || [];
-        document.getElementById('eventModalSchedule').innerHTML = schedule.length > 0 ? schedule.map(item => 
-            `<li class="flex items-start gap-3 p-3 rounded-lg bg-gray-50">
-                <i class="fas fa-check-circle text-gold-500 mt-0.5 shrink-0"></i>
-                <span class="text-gray-600 text-sm">${item}</span>
-            </li>`
-        ).join('') : '<p class="text-gray-500 text-sm italic">{{ __("No specific schedule announced.") }}</p>';
+        const scheduleContainer = el('eventModalSchedule');
         
-        document.getElementById('eventModal').classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+        if (scheduleContainer) {
+            scheduleContainer.innerHTML = schedule.length > 0 
+                ? schedule.map(item => 
+                    `<li class="flex items-start gap-3 p-3 rounded-lg bg-gray-50">
+                        <i class="fas fa-check-circle text-gold-500 mt-0.5 shrink-0"></i>
+                        <span class="text-gray-600 text-sm">${item}</span>
+                    </li>`
+                  ).join('') 
+                : '<p class="text-gray-500 text-sm italic">{{ __("No specific schedule announced.") }}</p>';
+        }
+
+        const modal = el('eventModal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
     }
+
+    function closeEventModal() {
+        const modal = el('eventModal');
+        if (modal) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // ========== VIDEO MODAL ==========
+    function openVideoModal(title, videoUrl) {
+        if (el('videoModalTitle')) el('videoModalTitle').textContent = title;
+        if (el('videoModalFrame')) el('videoModalFrame').src = videoUrl;
+        
+        const modal = el('videoModal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeVideoModal() {
+        const frame = el('videoModalFrame');
+        if (frame) frame.src = ''; // Stop video playback safely
+        
+        const modal = el('videoModal');
+        if (modal) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // ========== IMAGE MODAL ==========
+    function openImageModal(src, caption) {
+        if (el('imageModalSrc')) el('imageModalSrc').src = src;
+        if (el('imageModalCaption')) el('imageModalCaption').textContent = caption;
+        
+        const modal = el('imageModal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
     function closeImageModal() {
-        document.getElementById('imageModal').classList.add('hidden');
-        document.body.style.overflow = '';
+        const modal = el('imageModal');
+        if (modal) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
     }
+
+    // ========== CLOSE ON ESCAPE KEY ==========
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            // These will now run safely without crashing if a modal is missing
+            closeEventModal();
+            closeVideoModal();
+            closeImageModal();
+        }
+    });
 </script>
 @endsection

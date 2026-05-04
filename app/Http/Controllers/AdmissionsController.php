@@ -103,7 +103,8 @@ class AdmissionsController extends Controller
      * /apply — application form / portal redirect page.
      */
     public function apply()
-    {
+    { 
+        return redirect('https://busybugsjuniorschool.com/busy/join-us-now/');
         $academicYear = AcademicCalendarEvent::currentAcademicYear();
 
         $deadline = AcademicCalendarEvent::published()

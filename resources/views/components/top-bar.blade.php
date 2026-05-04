@@ -13,9 +13,9 @@
             </a>
         </div>
         <div class="flex items-center gap-4">
-            <a href="{{ route('student.portal') }}" class="hidden sm:flex items-center gap-2 hover:text-gold-500 transition-colors">
-                <i class="fas fa-user-graduate text-gold-500 text-xs"></i>
-                <span>Student Portal</span>
+            <a href="{{ route('admin.portal') }}" class="hidden sm:flex items-center gap-2 hover:text-gold-500 transition-colors">
+                <i class="fas fa-user text-gold-500 text-xs"></i>
+                <span>Admin Portal</span>
             </a>
             <a href="{{ route('apply') }}" class="btn-primary px-4 py-1.5 rounded text-white text-xs font-semibold">Apply Now</a>
             <div class="flex items-center gap-2 text-xs">

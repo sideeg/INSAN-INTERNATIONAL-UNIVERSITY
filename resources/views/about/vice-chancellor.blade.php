@@ -1,7 +1,7 @@
 {{-- resources/views/about/vice-chancellor.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Vice Chancellor — INSAN International University')
+@section('title', __('Vice Chancellor') . ' — ' . __('INSAN International University'))
 
 @section('content')
 
@@ -22,7 +22,7 @@
 
                     @if ($vc->qualifications)
                     <hr class="border-blue-700">
-                    <p class="text-blue-300 text-xs uppercase tracking-widest">Qualifications</p>
+                    <p class="text-blue-300 text-xs uppercase tracking-widest">{{ __('Qualifications') }}</p>
                     <p>{{ $vc->qualifications }}</p>
                     @endif
 
@@ -53,7 +53,7 @@
         {{-- ── Main biography ─────────────────────────────────── --}}
         <main class="lg:col-span-2">
             <p class="text-sm uppercase tracking-widest text-[#003366] font-semibold mb-2">
-                Office of the Vice Chancellor
+                {{ __('Office of the Vice Chancellor') }}
             </p>
             <h2 class="text-3xl font-bold text-gray-900 mb-2">{{ $vc->name }}</h2>
             <p class="text-gray-500 mb-8 text-lg">{{ $vc->title }}</p>

@@ -3,36 +3,87 @@
 @section('title', 'INSAN International University')
 
 @section('content')
+@php
+    // Helper to format image paths
+    $getImage = fn($path) => $path ? (Str::startsWith($path, ['http://', 'https://']) ? $path : asset('storage/' . $path)) : asset('images/placeholder.jpg');
+@endphp
+<!-- Dynamic Hero Slider -->
+<section class="relative h-[600px] lg:h-[700px] overflow-hidden group bg-navy-900" id="hero-carousel">
+    
+    @if($slides->isEmpty())
+        {{-- Fallback Slide --}}
+        <div class="absolute inset-0 z-10 opacity-100">
+            <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=1920&q=80" alt="University Campus" class="w-full h-full object-cover">
+            <div class="absolute inset-0 hero-overlay z-10"></div>
+            <div class="relative z-20 h-full max-w-7xl mx-auto px-4 flex items-center">
+                <div class="max-w-2xl">
+                    <h1 class="font-serif text-4xl md:text-6xl text-white font-bold leading-tight mb-6">
+                        Welcome to <span class="text-gold-500">INSAN</span>
+                    </h1>
+                    <p class="text-gray-300 text-lg mb-8">Rooted in values, driven by excellence.</p>
+                    <a href="{{ route('apply') }}" class="btn-primary px-8 py-3 rounded text-white font-semibold inline-block">
+                        Apply Now <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    @else
+        {{-- Dynamic Slides --}}
+        @foreach($slides as $index => $slide)
+    <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 ease-in-out {{ $index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0' }}">
+        
+        {{-- 1. BACKGROUND IMAGE: Now explicitly absolute and z-0 --}}
+        <img src="{{ $getImage($slide->thumbnail) }}" 
+             alt="{{ $slide->title ?? 'News Image' }}" 
+             class="slide-bg absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-[8000ms] ease-out {{ $index === 0 ? 'scale-110' : 'scale-100' }}">
+        
+        {{-- 2. OVERLAYS: Explicitly z-10 to sit on top of the image --}}
+        <div class="absolute inset-0 hero-overlay z-10"></div>
+        <div class="absolute inset-0 islamic-pattern opacity-30 z-10"></div>
+        
+        {{-- 3. CONTENT: Explicitly z-20 to sit on top of everything --}}
+        <div class="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
+            <div class="slide-content max-w-2xl transform transition-all duration-1000 delay-300 {{ $index === 0 ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0' }}">
+                
+                {{-- Category Tag --}}
+                <span class="inline-block px-4 py-1.5 rounded-full bg-gold-500/20 border border-gold-500/30 text-gold-400 text-xs font-bold tracking-widest uppercase mb-4 backdrop-blur-sm">
+                    {{ $slide->is_featured ? __('Featured News') : __('Latest News') }}
+                </span>
+                
+                {{-- The Title --}}
+                <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-white font-bold leading-tight mb-6 line-clamp-3">
+                    {{ $slide->title ?? 'Untitled Article' }}
+                </h1>
 
-<!-- Hero Section -->
-<section class="relative h-[600px] lg:h-[700px] overflow-hidden">
-    <div class="absolute inset-0">
-        <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=1920&q=80" 
-             alt="University Campus" class="w-full h-full object-cover">
-    </div>
-    <div class="absolute inset-0 hero-overlay"></div>
-    <div class="absolute inset-0 islamic-pattern opacity-30"></div>
-    <div class="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
-        <div class="max-w-2xl scroll-reveal">
-            <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-white font-bold leading-tight mb-6">
-                <span class="text-gold-500">Rooted in</span><br>
-                Islamic Values,<br>
-                <span class="text-gold-500">Driven by</span><br>
-                Academic Excellence
-            </h1>
-            <p class="text-gray-300 text-lg mb-8 leading-relaxed max-w-lg">
-                INSAN International University equips students with knowledge, professional skills, and entrepreneurial capacity to serve society and lead with integrity.
-            </p>
-            <div class="flex flex-wrap gap-4">
-                <a href="{{ route('apply') }}" class="btn-primary px-8 py-3 rounded text-white font-semibold flex items-center gap-2">
-                    Apply Now <i class="fas fa-arrow-right text-sm"></i>
-                </a>
-                <a href="{{ route('programmes') }}" class="btn-outline border-2 border-white text-white px-8 py-3 rounded font-semibold hover:bg-white hover:text-navy-900 transition-all">
-                    Explore Programs
-                </a>
+                {{-- The Excerpt/Description --}}
+                <p class="text-gray-300 text-lg mb-8 leading-relaxed max-w-lg drop-shadow-md line-clamp-2">
+                    {{ Str::limit($slide->excerpt ?? strip_tags($slide->content), 150) }}
+                </p>
+                
+                {{-- Action Buttons --}}
+                <div class="flex flex-wrap gap-4">
+                    <a href="{{ route('news.show', $slide->slug) }}" class="btn-primary px-8 py-3 rounded text-white font-semibold flex items-center gap-2 pointer-events-auto">
+                        {{__('Read Full Story')}} <i class="fas fa-arrow-right text-sm"></i>
+                    </a>
+                    <a href="{{ route('apply') }}" class="border-2 border-white/50 text-white px-8 py-3 rounded font-semibold hover:bg-white hover:text-navy-900 hover:border-white transition-all backdrop-blur-sm pointer-events-auto">
+                        {{__('Apply Now')}}
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+@endforeach
+
+        {{-- Navigation Controls (Kept inside the @else) --}}
+        @if($slides->count() > 1)
+            <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full bg-navy-900/40 text-white hover:bg-gold-500 transition-all">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full bg-navy-900/40 text-white hover:bg-gold-500 transition-all">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        @endif
+    @endif
 </section>
 
 <!-- Stats Bar -->
@@ -71,23 +122,23 @@
                     <div class="h-px w-16 bg-gold-500"></div>
                 </div>
                 <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold mb-6">
-                    About INSAN International<br>University
+                   {{ __('About INSAN International University') }} 
                 </h2>
                 <p class="text-gray-600 leading-relaxed mb-6">
-                    INSAN International University (formerly Islamic Call University) is a leading higher education institution committed to academic excellence, Islamic values, and societal development. We prepare ethical leaders, professionals, and innovators who will contribute positively to their communities and the world.
+                    {{__('INSAN International University (formerly Islamic Call University) is a leading higher education institution committed to academic excellence, Islamic values, and societal development. We prepare ethical leaders, professionals, and innovators who will contribute positively to their communities and the world.')}}
                 </p>
                 <a href="{{ route('about') }}" class="inline-flex items-center gap-2 border-2 border-navy-900 text-navy-900 px-6 py-3 rounded font-semibold hover:bg-navy-900 hover:text-white transition-all">
-                    Learn More About Us
+                    {{__('Learn More About Us')}}
                 </a>
             </div>
             <div class="scroll-reveal relative">
                 <div class="relative">
                     <div class="absolute -inset-4 border-2 border-gold-500/30 rounded-3xl transform rotate-3"></div>
-                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800&q=80" 
+                    <img src="https://visitkampala.kcca.go.ug/user_files/YPvNNqpIysTc.jpg" 
                          alt="University Building" class="relative rounded-2xl shadow-2xl w-full h-[400px] object-cover arch-shape">
                     <div class="absolute -bottom-6 -right-6 w-24 h-24 border-4 border-gold-500 rounded-full flex items-center justify-center bg-white shadow-lg">
                         <div class="text-center">
-                            <div class="text-2xl font-bold text-navy-900 font-serif">13+</div>
+                            <div class="text-2xl font-bold text-navy-900 font-serif">6+</div>
                             <div class="text-xs text-gray-500">Years</div>
                         </div>
                     </div>
@@ -101,15 +152,15 @@
 <section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16 scroll-reveal">
-            <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold">Why Choose INSAN?</h2>
+            <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold">{{__('Why Choose INSAN?') }}?</h2>
             <div class="w-24 h-1 bg-gold-500 mx-auto mt-4"></div>
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             @foreach([
-                ['icon' => 'fa-mosque', 'title' => 'Islamic Values', 'desc' => 'Education rooted in Islamic principles and ethics'],
-                ['icon' => 'fa-award', 'title' => 'Academic Excellence', 'desc' => 'International standards and quality teaching'],
-                ['icon' => 'fa-laptop-code', 'title' => 'Practical Learning', 'desc' => 'Skills, research and entrepreneurial development'],
-                ['icon' => 'fa-hands-helping', 'title' => 'Student Support', 'desc' => 'A supportive environment for personal and professional growth'],
+                ['icon' => 'fa-mosque', 'title' => __('Islamic Values'), 'desc' => __('Education rooted in Islamic principles and ethics')],
+                ['icon' => 'fa-award', 'title' => __('Academic Excellence'), 'desc' => __('International standards and quality teaching')],
+                ['icon' => 'fa-laptop-code', 'title' => __('Practical Learning'), 'desc' => __('Skills, research and entrepreneurial development')],
+                ['icon' => 'fa-hands-helping', 'title' => __('Student Support'), 'desc' => __('A supportive environment for personal and professional growth')],
             ] as $feature)
                 <div class="text-center p-8 rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-gold-500/30 scroll-reveal" style="transition-delay: {{ $loop->index * 0.1 }}s">
                     <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gold-500/10 flex items-center justify-center">
@@ -132,18 +183,18 @@
                 <i class="fas fa-crown text-gold-500"></i>
                 <div class="h-px w-12 bg-gold-500"></div>
             </div>
-            <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold">Our Strategic Objectives</h2>
+            <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold">{{__('Our Strategic Objectives')}}</h2>
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach([
-                ['num' => '01', 'icon' => 'fa-graduation-cap', 'title' => 'Educational Excellence', 'desc' => 'Establish colleges that meet the highest international academic standards.'],
-                ['num' => '02', 'icon' => 'fa-microscope', 'title' => 'Research Advancement', 'desc' => 'Promote high-quality research in humanities and applied sciences.'],
-                ['num' => '03', 'icon' => 'fa-globe-americas', 'title' => 'Social Responsibility', 'desc' => 'Engage communities and promote culture and ethical values.'],
-                ['num' => '04', 'icon' => 'fa-briefcase', 'title' => 'Workforce Development', 'desc' => 'Prepare highly qualified graduates to meet community needs.'],
-                ['num' => '05', 'icon' => 'fa-network-wired', 'title' => 'Strategic Partnerships', 'desc' => 'Build local partnerships and expand global collaboration with reputable universities.'],
-                ['num' => '06', 'icon' => 'fa-laptop', 'title' => 'E-Learning & Quality', 'desc' => 'Enhance digital education and ensure continuous quality improvement.'],
-                ['num' => '07', 'icon' => 'fa-chart-line', 'title' => 'Financial Sustainability', 'desc' => 'Strengthen resources and invest in assets for long-term institutional sustainability.'],
-                ['num' => '08', 'icon' => 'fa-users-cog', 'title' => 'Governance & HR', 'desc' => 'Build effective governance and develop competent, efficient human resources.'],
+                ['num' => '01', 'icon' => 'fa-graduation-cap', 'title' => __('Educational Excellence'), 'desc' => __('Establish colleges that meet the highest international academic standards.')],
+                ['num' => '02', 'icon' => 'fa-microscope', 'title' => __('Research Advancement'), 'desc' => __('Promote high-quality research in humanities and applied sciences.')],
+                ['num' => '03', 'icon' => 'fa-globe-americas', 'title' => __('Social Responsibility'), 'desc' => __('Engage communities and promote culture and ethical values.')],
+                ['num' => '04', 'icon' => 'fa-briefcase', 'title' => __('Workforce Development'), 'desc' => __('Prepare highly qualified graduates to meet community needs.')],
+                ['num' => '05', 'icon' => 'fa-network-wired', 'title' => __('Strategic Partnerships'), 'desc' => __('Build local partnerships and expand global collaboration with reputable universities.')],
+                ['num' => '06', 'icon' => 'fa-laptop', 'title' => __('E-Learning & Quality'), 'desc' => __('Enhance digital education and ensure continuous quality improvement.')],
+                ['num' => '07', 'icon' => 'fa-chart-line', 'title' => __('Financial Sustainability'), 'desc' => __('Strengthen resources and invest in assets for long-term institutional sustainability.')],
+                ['num' => '08', 'icon' => 'fa-users-cog', 'title' => __('Governance & HR'), 'desc' => __('Build effective governance and develop competent, efficient human resources.')],
             ] as $objective)
                 <div class="objective-card bg-white p-6 rounded-xl scroll-reveal" style="transition-delay: {{ $loop->index * 0.05 }}s">
                     <div class="flex items-start gap-4">
@@ -167,7 +218,7 @@
     <div class="absolute inset-0 islamic-pattern opacity-20"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div class="text-center mb-16 scroll-reveal">
-            <h2 class="font-serif text-3xl md:text-4xl text-white font-bold">Our Core Values</h2>
+            <h2 class="font-serif text-3xl md:text-4xl text-white font-bold">{{__('Our Core Values')}}</h2>
             <div class="w-24 h-1 bg-gold-500 mx-auto mt-4"></div>
         </div>
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
@@ -215,10 +266,10 @@
 
 @section('cta-section')
     @include('components.cta-section', [
-        'title' => 'Begin Your Journey at INSAN',
-        'description' => 'Applications are now open for the 2026 academic year. Discover your potential and join a community of excellence.',
-        'primaryButton' => ['text' => 'Apply Now', 'icon' => 'fa-arrow-right', 'url' => route('apply')],
-        'secondaryButton' => ['text' => 'Request Info', 'icon' => 'fa-envelope', 'url' => route('contact')]
+        'title' => __('Begin Your Journey at INSAN'),
+        'description' => __('Applications are now open for the current academic year. Discover your potential and join a community of excellence.'),
+        'primaryButton' => ['text' => __('Apply Now'), 'icon' => 'fa-arrow-right', 'url' => route('apply')],
+        'secondaryButton' => ['text' => __('Request Info'), 'icon' => 'fa-envelope', 'url' => route('contact')]
     ])
 @endsection
 
@@ -245,4 +296,77 @@
         border-color: #c9a96e;
     }
 </style>
+@endsection
+
+@section('page-scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.carousel-slide');
+        if(slides.length <= 1) return; // Don't run script if 1 or 0 slides
+
+        const contents = document.querySelectorAll('.slide-content');
+        const backgrounds = document.querySelectorAll('.slide-bg');
+        const dots = document.querySelectorAll('.carousel-dot');
+        let currentIndex = 0;
+        let interval;
+
+        function showSlide(index) {
+            // Hide current slide
+            slides[currentIndex].classList.replace('opacity-100', 'opacity-0');
+            slides[currentIndex].classList.replace('z-10', 'z-0');
+            contents[currentIndex].classList.replace('translate-y-0', 'translate-y-12');
+            contents[currentIndex].classList.replace('opacity-100', 'opacity-0');
+            backgrounds[currentIndex].classList.replace('scale-110', 'scale-100');
+            
+            if(dots.length) {
+                dots[currentIndex].classList.replace('w-8', 'w-2.5');
+                dots[currentIndex].classList.replace('bg-gold-500', 'bg-white/50');
+            }
+
+            // Update index
+            currentIndex = index;
+
+            // Show new slide
+            slides[currentIndex].classList.replace('opacity-0', 'opacity-100');
+            slides[currentIndex].classList.replace('z-0', 'z-10');
+            
+            // Delay text animation slightly for smooth effect
+            setTimeout(() => {
+                contents[currentIndex].classList.replace('translate-y-12', 'translate-y-0');
+                contents[currentIndex].classList.replace('opacity-0', 'opacity-100');
+            }, 100);
+
+            // Trigger background zoom
+            backgrounds[currentIndex].classList.replace('scale-100', 'scale-110');
+            
+            if(dots.length) {
+                dots[currentIndex].classList.replace('w-2.5', 'w-8');
+                dots[currentIndex].classList.replace('bg-white/50', 'bg-gold-500');
+            }
+        }
+
+        window.nextSlide = function() {
+            showSlide((currentIndex + 1) % slides.length);
+            resetInterval();
+        };
+
+        window.prevSlide = function() {
+            showSlide((currentIndex - 1 + slides.length) % slides.length);
+            resetInterval();
+        };
+
+        window.goToSlide = function(index) {
+            showSlide(index);
+            resetInterval();
+        };
+
+        function resetInterval() {
+            clearInterval(interval);
+            interval = setInterval(window.nextSlide, 6000); // 6 seconds per slide
+        }
+
+        // Start auto-play
+        interval = setInterval(window.nextSlide, 6000);
+    });
+</script>
 @endsection

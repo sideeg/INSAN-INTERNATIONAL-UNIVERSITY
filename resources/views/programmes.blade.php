@@ -11,13 +11,13 @@
 
 @include('components.hero-section', [
     'backgroundImage' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&q=80',
-    'title' => 'Academic Programmes',
-    'highlightedText' => '& Pathways',
-    'description' => 'Discover our comprehensive range of undergraduate, graduate, and continuing education programmes designed to empower your academic and professional journey.',
+    'title' => __('Academic Programmes'),
+    'highlightedText' => __('& Pathways'),
+    'description' => __('Discover our comprehensive range of undergraduate, graduate, and continuing education programmes designed to empower your academic and professional journey.'),
     'breadcrumbs' => [
         ['label' => 'Home', 'url' => route('home')],
-        ['label' => 'Academics', 'url' => route('programmes')],
-        ['label' => 'Programmes & Pathways']
+        ['label' => __('Academics'), 'url' => route('programmes')],
+        ['label' => __('Programmes & Pathways')]
     ],
     'height' => '400px'
 ])
@@ -29,15 +29,15 @@
             <div class="relative w-full md:w-96">
                 <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 <input type="text" 
-                       placeholder="Search programmes by name or keyword..." 
+                       placeholder={{__("Search programmes by name or keyword...")}} 
                        class="search-input w-full pl-12 pr-4 py-3 rounded-lg border border-gray-200 focus:border-gold-500 focus:outline-none transition-all text-sm"
                        id="searchInput">
             </div>
             <div class="flex flex-wrap gap-2">
-                <span class="filter-chip active px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-filter="all">All Programmes</span>
-                <span class="filter-chip px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-filter="undergraduate">Undergraduate</span>
-                <span class="filter-chip px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-filter="graduate">Graduate</span>
-                <span class="filter-chip px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-filter="continuing">Continuing Ed</span>
+                <span class="filter-chip active px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-filter="all">{{__("All Programmes")}}</span>
+                <span class="filter-chip px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-filter="undergraduate">{{__("Undergraduate")}}</span>
+                <span class="filter-chip px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-filter="graduate">{{__("Graduate")}}</span>
+                <span class="filter-chip px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-filter="continuing">{{__("Continuing Ed")}}</span>
             </div>
         </div>
     </div>
@@ -52,8 +52,8 @@
                     <i class="fas fa-graduation-cap"></i>
                 </div>
                 <div class="text-left">
-                    <div>Undergraduate Programmes</div>
-                    <div class="text-xs font-sans font-normal opacity-70">Bachelor's Degrees</div>
+                    <div>{{__('Undergraduate Programmes')}}</div>
+                    <div class="text-xs font-sans font-normal opacity-70">{{__("Bachelor's Degrees")}}</div>
                 </div>
             </button>
             <button class="tab-btn px-8 py-4 rounded-xl font-serif font-bold text-lg flex items-center gap-3 bg-white text-navy-900 border border-gray-200" data-tab="graduate">
@@ -61,8 +61,8 @@
                     <i class="fas fa-user-graduate"></i>
                 </div>
                 <div class="text-left">
-                    <div>Graduate Studies</div>
-                    <div class="text-xs font-sans font-normal opacity-70">Master's & PhD</div>
+                    <div>{{__('Graduate Studies')}}</div>
+                    <div class="text-xs font-sans font-normal opacity-70">{{__("Master's & PhD")}}</div>
                 </div>
             </button>
             <button class="tab-btn px-8 py-4 rounded-xl font-serif font-bold text-lg flex items-center gap-3 bg-white text-navy-900 border border-gray-200" data-tab="continuing">
@@ -70,8 +70,8 @@
                     <i class="fas fa-chalkboard-teacher"></i>
                 </div>
                 <div class="text-left">
-                    <div>Continuing Education</div>
-                    <div class="text-xs font-sans font-normal opacity-70">Certificates & Diplomas</div>
+                    <div>{{__('Continuing Education')}}</div>
+                    <div class="text-xs font-sans font-normal opacity-70">{{__('Certificates & Diplomas')}}</div>
                 </div>
             </button>
         </div>
@@ -79,8 +79,8 @@
         <!-- Undergraduate Tab -->
         <div class="tab-content active" id="undergraduate">
             <div class="mb-8 scroll-reveal">
-                <h2 class="font-serif text-3xl text-navy-900 font-bold mb-2">Undergraduate Programmes</h2>
-                <p class="text-gray-600">Four-year bachelor's degree programmes across 8 faculties, combining theoretical knowledge with practical skills.</p>
+                <h2 class="font-serif text-3xl text-navy-900 font-bold mb-2">{{__('Undergraduate Programmes')}}</h2>
+                <p class="text-gray-600">{{__("Four-year bachelor's degree programmes across 8 faculties, combining theoretical knowledge with practical skills.")}}</p>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($undergraduateProgrammes as $programme)
@@ -114,8 +114,8 @@
         <!-- Graduate Tab -->
         <div class="tab-content" id="graduate">
             <div class="mb-8 scroll-reveal">
-                <h2 class="font-serif text-3xl text-navy-900 font-bold mb-2">Graduate Studies</h2>
-                <p class="text-gray-600">Advanced master's and doctoral programmes for researchers, professionals, and academics seeking specialised expertise.</p>
+                <h2 class="font-serif text-3xl text-navy-900 font-bold mb-2">{{__('Graduate Studies')}}</h2>
+                <p class="text-gray-600">{{__("Advanced master's and doctoral programmes for researchers, professionals, and academics seeking specialised expertise.")}}</p>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($graduateProgrammes as $programme)
@@ -141,7 +141,7 @@
                         </div>
                     </div>
                 @empty
-                    <div class="col-span-full text-center py-8 text-gray-500">No graduate programmes available.</div>
+                    <div class="col-span-full text-center py-8 text-gray-500">{{__('No graduate programmes available.')}}</div>
                 @endforelse
             </div>
         </div>
@@ -149,8 +149,8 @@
         <!-- Continuing Education Tab -->
         <div class="tab-content" id="continuing">
             <div class="mb-8 scroll-reveal">
-                <h2 class="font-serif text-3xl text-navy-900 font-bold mb-2">Continuing Education</h2>
-                <p class="text-gray-600">Professional certificates, diplomas, and short courses designed for career advancement and lifelong learning.</p>
+                <h2 class="font-serif text-3xl text-navy-900 font-bold mb-2">{{__('Continuing Education')}}</h2>
+                <p class="text-gray-600">{{__("Professional certificates, diplomas, and short courses designed for career advancement and lifelong learning.")}}</p>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($continuingProgrammes as $programme)
@@ -176,7 +176,7 @@
                         </div>
                     </div>
                 @empty
-                    <div class="col-span-full text-center py-8 text-gray-500">No continuing education programmes available.</div>
+                    <div class="col-span-full text-center py-8 text-gray-500">{{__("No continuing education programmes available.")}}</div>
                 @endforelse
             </div>
         </div>

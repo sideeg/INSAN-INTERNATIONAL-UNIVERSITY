@@ -3,12 +3,16 @@
 {{-- ── Section hero ───────────────────────────────────── --}}
 <div class="bg-gradient-to-br from-[#003366] to-[#00509e] text-white py-16 px-6">
     <div class="max-w-6xl mx-auto">
-        <p class="text-sm uppercase tracking-widest text-blue-200 mb-2">INSAN International University</p>
-        <h1 class="text-4xl font-bold mb-4">About Us</h1>
+<p class="text-sm uppercase tracking-widest text-blue-200 mb-2">
+    {{ __('INSAN International University') }}
+</p>        
+
+<h1 class="text-4xl font-bold mb-4">
+    {{ __('About Us') }}
+</h1>
         <p class="text-blue-100 max-w-2xl">
-            Established to advance knowledge, foster innovation, and serve society —
-            discover our leadership, governance, partnerships, and legacy of graduation.
-        </p>
+    {{ __('Established to advance knowledge, foster innovation, and serve society — discover our leadership, governance, partnerships, and legacy of graduation.') }}
+</p>
     </div>
 </div>
 
@@ -16,16 +20,16 @@
 <nav class="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-sm">
     <div class="max-w-6xl mx-auto px-6 overflow-x-auto">
         <ul class="flex gap-1 whitespace-nowrap text-sm font-medium">
-            @php
-                $tabs = [
-                    ['route' => 'about',               'label' => 'Overview'],
-                    ['route' => 'about.vice-chancellor','label' => 'Vice Chancellor'],
-                    ['route' => 'about.governance',    'label' => 'Governance'],
-                    ['route' => 'about.leadership',    'label' => 'Leadership'],
-                    ['route' => 'about.collaborations','label' => 'Collaborations'],
-                    ['route' => 'about.graduation',    'label' => 'Graduation'],
-                ];
-            @endphp
+           @php
+$tabs = [
+    ['route' => 'about', 'label' => __('Overview')],
+    ['route' => 'about.vice-chancellor','label' => __('Vice Chancellor')],
+    ['route' => 'about.governance','label' => __('Governance')],
+    ['route' => 'about.leadership','label' => __('Leadership')],
+    ['route' => 'about.collaborations','label' => __('Collaborations')],
+    ['route' => 'about.graduation','label' => __('Graduation')],
+];
+@endphp
 
             @foreach ($tabs as $tab)
                 @php $active = request()->routeIs($tab['route']); @endphp

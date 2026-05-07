@@ -1,7 +1,7 @@
 {{-- resources/views/campus-life.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Campus Life | INSAN International University')
+@section('title', __('Campus Life') . ' | ' . __('INSAN International University'))
 
 @php
     $getImage = fn($path) => $path ? (Str::startsWith($path, ['http://', 'https://']) ? $path : asset('storage/' . $path)) : asset('images/placeholder.jpg');
@@ -11,12 +11,12 @@
 
 @include('components.hero-section', [
     'backgroundImage' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&q=80',
-    'title' => 'Life at',
-    'highlightedText' => 'INSAN',
-    'description' => 'A vibrant community where academic excellence meets personal growth, leadership development, and lifelong friendships.',
+    'title' => __('Life at'),
+    'highlightedText' => __('INSAN'),
+    'description' => __('A vibrant community where academic excellence meets personal growth, leadership development, and lifelong friendships'),
     'breadcrumbs' => [
-        ['label' => 'Home', 'url' => route('home')],
-        ['label' => 'Campus Life']
+        ['label' => __('Home'), 'url' => route('home')],
+        ['label' => __('Campus Life')]
     ],
     'height' => '450px'
 ])
@@ -26,10 +26,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             @foreach([
-                ['number' => $clubs->count() . '+', 'label' => 'Student Clubs'],
-                ['number' => '1,200', 'label' => 'On-Campus Residents'],
-                ['number' => $countries->count() . '+', 'label' => 'Nationalities'],
-                ['number' => '150+', 'label' => 'Annual Events'],
+                ['number' => $clubs->count() . '+', 'label' => __('Student Clubs')],
+                ['number' => '1,200', 'label' => __('On-Campus Residents')],
+                ['number' => $countries->count() . '+', 'label' => __('Nationalities')],
+                ['number' => '150+', 'label' => __('Annual Events')],
             ] as $stat)
                 <div class="stat-card text-center p-4 transition-transform duration-300 scroll-reveal" style="transition-delay: {{ $loop->index * 0.1 }}s">
                     <div class="text-3xl font-bold text-gold-500 font-serif mb-1">{{ $stat['number'] }}</div>
@@ -45,13 +45,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-wrap justify-center gap-4">
             <button class="tab-btn active px-6 py-3 rounded-xl font-serif font-bold text-base flex items-center gap-2" data-tab="leadership">
-                <i class="fas fa-users"></i> Student Leadership
+                <i class="fas fa-users"></i> {{ __('Student Leadership') }}
             </button>
             <button class="tab-btn px-6 py-3 rounded-xl font-serif font-bold text-base flex items-center gap-2 bg-white text-navy-900 border border-gray-200" data-tab="services">
-                <i class="fas fa-hands-helping"></i> Student Services
+                <i class="fas fa-hands-helping"></i> {{ __('Student Services') }}
             </button>
             <button class="tab-btn px-6 py-3 rounded-xl font-serif font-bold text-base flex items-center gap-2 bg-white text-navy-900 border border-gray-200" data-tab="international">
-                <i class="fas fa-globe"></i> International Students
+                <i class="fas fa-globe"></i> {{ __('International Students') }}
             </button>
         </div>
     </div>
@@ -62,10 +62,10 @@
     <section class="py-16 bg-cream">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 scroll-reveal">
-                <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold mb-4">Student Leadership</h2>
+                <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold mb-4">{{ __('Student Leadership') }}</h2>
                 <div class="w-24 h-1 bg-gold-500 mx-auto mb-6"></div>
                 <p class="text-gray-600 leading-relaxed">
-                    At INSAN, we believe leadership is cultivated through practice, mentorship, and service. Our student leadership ecosystem empowers individuals to develop governance skills, organize initiatives, and represent the student body with integrity and vision.
+                    {{ __('At INSAN, we believe leadership is cultivated through practice, mentorship, and service. Our student leadership ecosystem empowers individuals to develop governance skills, organize initiatives, and represent the student body with integrity and vision.') }}
                 </p>
             </div>
 
@@ -76,8 +76,8 @@
                         <i class="fas fa-landmark text-xl"></i>
                     </div>
                     <div>
-                        <h3 class="font-serif text-2xl text-navy-900 font-bold">Student Representative Council</h3>
-                        <p class="text-gray-500 text-sm">The official voice of the student body</p>
+                        <h3 class="font-serif text-2xl text-navy-900 font-bold">{{ __('Student Representative Council') }}</h3>
+                        <p class="text-gray-500 text-sm">{{ __('The official voice of the student body') }}</p>
                     </div>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -101,7 +101,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-span-full text-center py-8 text-gray-500">Council members are currently being updated.</div>
+                        <div class="col-span-full text-center py-8 text-gray-500">{{ __('Council members are currently being updated.') }}</div>
                     @endforelse
                 </div>
             </div>
@@ -113,8 +113,8 @@
                         <i class="fas fa-users-cog text-xl"></i>
                     </div>
                     <div>
-                        <h3 class="font-serif text-2xl text-navy-900 font-bold">Clubs & Organizations</h3>
-                        <p class="text-gray-500 text-sm">Find your community and pursue your passions</p>
+                        <h3 class="font-serif text-2xl text-navy-900 font-bold">{{ __('Clubs & Organizations') }}</h3>
+                        <p class="text-gray-500 text-sm">{{ __('Find your community and pursue your passions') }}</p>
                     </div>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -127,12 +127,12 @@
                                 <div>
                                     <h4 class="font-serif text-lg text-navy-900 font-bold mb-1">{{ $club->name }}</h4>
                                     <p class="text-gray-500 text-sm mb-2 line-clamp-3">{{ $club->description }}</p>
-                                    <span class="text-xs text-gold-600 font-semibold">{{ $club->member_count }} Members</span>
+                                    <span class="text-xs text-gold-600 font-semibold">{{ $club->member_count }} {{ __('Members') }}</span>
                                 </div>
                             </div>
                         </div>
                     @empty
-                        <div class="col-span-full text-center py-8 text-gray-500">Clubs and organizations are currently being updated.</div>
+                        <div class="col-span-full text-center py-8 text-gray-500">{{ __('Clubs and organizations are currently being updated.') }}</div>
                     @endforelse
                 </div>
             </div>
@@ -145,10 +145,10 @@
     <section class="py-16 bg-cream">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 scroll-reveal">
-                <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold mb-4">Student Services</h2>
+                <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold mb-4">{{ __('Student Services') }}</h2>
                 <div class="w-24 h-1 bg-gold-500 mx-auto mb-6"></div>
                 <p class="text-gray-600 leading-relaxed">
-                    Comprehensive support services designed to help you thrive academically, personally, and professionally throughout your journey at INSAN.
+                    {{ __('Comprehensive support services designed to help you thrive academically, personally, and professionally throughout your journey at INSAN.') }}
                 </p>
             </div>
 
@@ -174,12 +174,12 @@
                                 @endif
                             </ul>
                             <a href="#" class="text-gold-600 font-semibold text-sm hover:text-gold-700 flex items-center gap-1">
-                                Learn More <i class="fas fa-arrow-right text-xs"></i>
+                                {{ __('Learn More') }} <i class="fas fa-arrow-right text-xs"></i>
                             </a>
                         </div>
                     </div>
                 @empty
-                    <div class="col-span-full text-center py-8 text-gray-500">Student services are currently being updated.</div>
+                    <div class="col-span-full text-center py-8 text-gray-500">{{ __('Student services are currently being updated.') }}</div>
                 @endforelse
             </div>
         </div>
@@ -191,10 +191,10 @@
     <section class="py-16 bg-cream">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 scroll-reveal">
-                <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold mb-4">International Students</h2>
+                <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold mb-4">{{ __('International Students') }}</h2>
                 <div class="w-24 h-1 bg-gold-500 mx-auto mb-6"></div>
                 <p class="text-gray-600 leading-relaxed">
-                    Join a diverse community representing over {{ $countries->count() > 0 ? $countries->count() : '30+' }} countries. Our International Student Office provides comprehensive support from admission to graduation.
+                    {{ __('Join a diverse community representing over') }} {{ $countries->count() > 0 ? $countries->count() : '30+' }} {{ __('countries. Our International Student Office provides comprehensive support from admission to graduation.') }}
                 </p>
             </div>
 
@@ -206,18 +206,18 @@
                             <div class="w-10 h-10 rounded-full bg-gold-500/10 flex items-center justify-center">
                                 <i class="fas fa-globe-africa text-gold-500"></i>
                             </div>
-                            <span class="text-gold-600 font-semibold text-sm uppercase tracking-wider">Your Home Away From Home</span>
+                            <span class="text-gold-600 font-semibold text-sm uppercase tracking-wider">{{ __('Your Home Away From Home') }}</span>
                         </div>
-                        <h3 class="font-serif text-2xl text-navy-900 font-bold mb-4">Dedicated Support for Our Global Community</h3>
+                        <h3 class="font-serif text-2xl text-navy-900 font-bold mb-4">{{ __('Dedicated Support for Our Global Community') }}</h3>
                         <p class="text-gray-600 mb-6 leading-relaxed">
-                            Whether you are from neighboring African nations, the Middle East, Southeast Asia, or beyond, our team understands the unique challenges of studying abroad.
+                            {{ __('Whether you are from neighboring African nations, the Middle East, Southeast Asia, or beyond, our team understands the unique challenges of studying abroad.') }}
                         </p>
                         <div class="flex flex-wrap gap-3">
-                            <a href="{{ route('admissions') }}" class="btn-primary px-6 py-3 rounded-lg text-white font-semibold text-sm">International Admissions</a>
+                            <a href="{{ route('admissions') }}" class="btn-primary px-6 py-3 rounded-lg text-white font-semibold text-sm">{{ __('International Admissions') }}</a>
                         </div>
                     </div>
                     <div class="h-64 lg:h-auto">
-                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80" alt="International Students" class="w-full h-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80" alt="{{ __('International Students') }}" class="w-full h-full object-cover">
                     </div>
                 </div>
             </div>
@@ -252,34 +252,34 @@
                             </div>
                         </div>
                     @empty
-                        <p class="text-gray-500 text-center py-8">International support services are currently being updated.</p>
+                        <p class="text-gray-500 text-center py-8">{{ __('International support services are currently being updated.') }}</p>
                     @endforelse
                 </div>
 
                 <!-- Quick Info Card -->
                 <div class="scroll-reveal" style="transition-delay: 0.2s">
                     <div class="bg-navy-900 rounded-2xl p-8 text-white sticky top-40">
-                        <h4 class="font-serif text-xl font-bold mb-6 text-gold-500">Quick Information</h4>
+                        <h4 class="font-serif text-xl font-bold mb-6 text-gold-500">{{ __('Quick Information') }}</h4>
                         <div class="space-y-6">
                             <div class="flex items-start gap-3">
                                 <i class="fas fa-envelope text-gold-500 mt-1"></i>
                                 <div>
-                                    <div class="text-xs text-gray-400 mb-1">Email</div>
+                                    <div class="text-xs text-gray-400 mb-1">{{ __('Email') }}</div>
                                     <div class="text-sm">international@inu.edu.sd</div>
                                 </div>
                             </div>
                             <div class="flex items-start gap-3">
                                 <i class="fas fa-phone text-gold-500 mt-1"></i>
                                 <div>
-                                    <div class="text-xs text-gray-400 mb-1">Phone</div>
+                                    <div class="text-xs text-gray-400 mb-1">{{ __('Phone') }}</div>
                                     <div class="text-sm">+249 123 456 790</div>
                                 </div>
                             </div>
                             <div class="flex items-start gap-3">
                                 <i class="fas fa-clock text-gold-500 mt-1"></i>
                                 <div>
-                                    <div class="text-xs text-gray-400 mb-1">Office Hours</div>
-                                    <div class="text-sm">Sun - Thu: 8:00 AM - 4:00 PM</div>
+                                    <div class="text-xs text-gray-400 mb-1">{{ __('Office Hours') }}</div>
+                                    <div class="text-sm">{{ __('Sun - Thu: 8:00 AM - 4:00 PM') }}</div>
                                 </div>
                             </div>
                         </div>
@@ -289,16 +289,16 @@
 
             <!-- Country Representatives -->
             <div class="scroll-reveal">
-                <h3 class="font-serif text-2xl text-navy-900 font-bold mb-8 text-center">Our International Community</h3>
+                <h3 class="font-serif text-2xl text-navy-900 font-bold mb-8 text-center">{{ __('Our International Community') }}</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                     @forelse($countries as $country)
                         <div class="bg-white rounded-xl p-4 text-center shadow-sm hover:shadow-md transition-shadow border border-gray-100">
                             <div class="text-3xl mb-2">{{ $country->flag_emoji }}</div>
                             <div class="text-sm font-semibold text-navy-900">{{ $country->name }}</div>
-                            <div class="text-xs text-gray-500 mt-1">{{ $country->student_count }} Students</div>
+                            <div class="text-xs text-gray-500 mt-1">{{ $country->student_count }} {{ __('Students') }}</div>
                         </div>
                     @empty
-                        <div class="col-span-full text-center py-8 text-gray-500">Country representations are currently being updated.</div>
+                        <div class="col-span-full text-center py-8 text-gray-500">{{ __('Country representations are currently being updated.') }}</div>
                     @endforelse
                 </div>
             </div>
@@ -310,9 +310,9 @@
 
 @section('cta-section')
     @include('components.cta-section', [
-        'title' => 'Experience INSAN Firsthand',
-        'description' => 'Schedule a campus visit, attend an open day, or connect with a current student to learn more about life at INSAN.',
-        'primaryButton' => ['text' => 'Contact Admissions', 'icon' => 'fa-envelope', 'url' => route('contact')],
+        'title' => __('Experience INSAN Firsthand'),
+        'description' => __('Schedule a campus visit, attend an open day, or connect with a current student to learn more about life at INSAN.'),
+        'primaryButton' => ['text' => __('Contact Admissions'), 'icon' => 'fa-envelope', 'url' => route('contact')],
         'secondaryButton' => null
     ])
 @endsection

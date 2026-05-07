@@ -8,9 +8,9 @@
 {{-- 1. Hero Section --}}
 @include('components.hero-section', [
     'backgroundImage' => 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1920&q=80',
-    'title' => 'Welcome to',
+    'title' => __('Welcome to'),
     'highlightedText' => 'INSAN',
-    'description' => 'Join a vibrant, multicultural community. Discover world-class education, global collaboration, and a supportive environment designed for your success.',
+    'description' => __('Join a vibrant, multicultural community. Discover world-class education, global collaboration, and a supportive environment designed for your success.'),
     'breadcrumbs' => [
         ['label' => 'Home', 'url' => route('home')],
         ['label' => 'International Students']
@@ -30,16 +30,16 @@
                     <div class="h-px w-16 bg-gold-500"></div>
                 </div>
                 <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold mb-6">
-                    A Global Perspective on<br>Education
+                    {{ __('A Global Perspective on Education') }}
                 </h2>
                 <p class="text-gray-600 leading-relaxed mb-6">
-                    INSAN International University offers a truly multicultural environment that fosters global collaboration. We take pride in providing a welcoming and supportive atmosphere for students from all over the world.
+                    {{__('INSAN International University offers a truly multicultural environment that fosters global collaboration. We take pride in providing a welcoming and supportive atmosphere for students from all over the world.')}}
                 </p>
                 <p class="text-gray-600 leading-relaxed mb-8">
-                    Whether you are pursuing undergraduate or postgraduate studies, you will have access to a wide range of programs across our faculties—including Science, Education, Humanities, Business, and Islamic Studies—all backed by comprehensive academic advising and orientation programs.
+                    {{__("Whether you are pursuing undergraduate or postgraduate studies, you will have access to a wide range of programs across our faculties—including Science, Education, Humanities, Business, and Islamic Studies—all backed by comprehensive academic advising and orientation programs.")}}
                 </p>
                 <a href="{{ route('programmes') }}" class="inline-flex items-center gap-2 border-2 border-navy-900 text-navy-900 px-6 py-3 rounded font-semibold hover:bg-navy-900 hover:text-white transition-all">
-                    Explore Our Programmes <i class="fas fa-arrow-right"></i>
+                    {{__('Explore Our Programmes')}} <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
             <div class="scroll-reveal relative">
@@ -56,20 +56,20 @@
 <section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-16 scroll-reveal">
-            <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold mb-4">Dedicated Support Services</h2>
+            <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold mb-4">{{ __('Dedicated Support Services') }}</h2>
             <div class="w-24 h-1 bg-gold-500 mx-auto mb-6"></div>
             <p class="text-gray-600 leading-relaxed">
-                Relocating for your studies is a big step. Our International Student Office is here to provide crucial utilities and assistance to ensure a smooth transition.
+                {{__('Relocating for your studies is a big step. Our International Student Office is here to provide crucial utilities and assistance to ensure a smooth transition.')}}
             </p>
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             @php
             $services = [
-                ['icon' => 'fa-passport', 'title' => 'Visa Assistance', 'desc' => 'Step-by-step guidance on obtaining your student visas and ensuring full immigration compliance.'],
-                ['icon' => 'fa-home', 'title' => 'Housing Support', 'desc' => 'Assistance in finding suitable, safe, and comfortable accommodation in hostels and nearby apartments.'],
-                ['icon' => 'fa-language', 'title' => 'Language Support', 'desc' => 'Dedicated English and Arabic language courses to help non-native speakers excel academically.'],
-                ['icon' => 'fa-hands-helping', 'title' => 'Cultural Integration', 'desc' => 'Organized events and activities to help you experience the local culture and integrate seamlessly.'],
+                ['icon' => 'fa-passport', 'title' => __('Visa Assistance'), 'desc' => __('Step-by-step guidance on obtaining your student visas and ensuring full immigration compliance.')],
+                ['icon' => 'fa-home', 'title' => __('Housing Support'), 'desc' => __('Assistance in finding suitable, safe, and comfortable accommodation in hostels and nearby apartments.')],
+                ['icon' => 'fa-language', 'title' => __('Language Support'), 'desc' => __('Dedicated English and Arabic language courses to help non-native speakers excel academically.')],
+                ['icon' => 'fa-hands-helping', 'title' => __('Cultural Integration'), 'desc' => __('Organized events and activities to help you experience the local culture and integrate seamlessly.')],
             ];
             @endphp
 
@@ -93,15 +93,15 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center scroll-reveal">
         <i class="fas fa-quote-left text-5xl text-gold-500 mb-8 opacity-80"></i>
         <p class="font-serif text-2xl md:text-3xl text-white leading-relaxed mb-8">
-            "Studying at INSAN has been a transformative experience. The multicultural environment has allowed me to build lifelong friendships and gain a global perspective on education."
+            {{__("Studying at INSAN has been a transformative experience. The multicultural environment has allowed me to build lifelong friendships and gain a global perspective on education.")}}
         </p>
         <div class="flex items-center justify-center gap-4">
             <div class="w-14 h-14 rounded-full bg-gold-500 flex items-center justify-center text-white text-xl font-bold">
                 A
             </div>
             <div class="text-left">
-                <h4 class="font-bold text-gold-500 text-lg">Abdulhakim Muhammad Jami</h4>
-                <p class="text-gray-400 text-sm">International Student, Somalia</p>
+                <h4 class="font-bold text-gold-500 text-lg">{{__('Abdulhakim Muhammad Jami')}}</h4>
+                <p class="text-gray-400 text-sm">{{__(('International Student, Somalia'))}}</p>
             </div>
         </div>
     </div>
@@ -114,17 +114,17 @@
             
             {{-- Required Documents --}}
             <div class="scroll-reveal">
-                <h3 class="font-serif text-3xl text-navy-900 font-bold mb-6">Application Requirements</h3>
+                <h3 class="font-serif text-3xl text-navy-900 font-bold mb-6">{{ __('Application Requirements') }}</h3>
                 <p class="text-gray-600 mb-8 leading-relaxed">
                     Preparing your application is simple. Ensure you have the following essential documents ready before submitting your application to the Admissions Office.
                 </p>
                 
                 <ul class="space-y-4">
                     @foreach([
-                        'A completed application form (Online or Physical).',
-                        'Academic transcripts and official certificates.',
-                        'A valid passport (with at least 6 months validity).',
-                        'Proof of English/Arabic proficiency (if required for your specific program).'
+                        __("A completed application form (Online or Physical)."),
+                        __("Academic transcripts and official certificates."),
+                        __("A valid passport (with at least 6 months validity)."),
+                        __("Proof of English/Arabic proficiency (if required for your specific program)."),
                     ] as $req)
                     <li class="flex items-start gap-4 p-4 rounded-xl bg-white border border-gray-100 shadow-sm">
                         <i class="fas fa-check-circle text-gold-500 text-xl mt-0.5"></i>
@@ -136,30 +136,30 @@
 
             {{-- Process Steps --}}
             <div class="scroll-reveal" style="transition-delay: 0.2s">
-                <h3 class="font-serif text-3xl text-navy-900 font-bold mb-6">How to Apply</h3>
+                <h3 class="font-serif text-3xl text-navy-900 font-bold mb-6">{{__('How to Apply') }}</h3>
                 <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-gold-500 before:to-cream">
                     
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-cream bg-gold-500 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow">1</div>
                         <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-5 rounded-xl bg-white shadow-sm border border-gray-100">
-                            <h4 class="font-bold text-navy-900 mb-1">Apply Online</h4>
-                            <p class="text-sm text-gray-500">Submit your application via our online portal or directly to the Admissions Office.</p>
+                            <h4 class="font-bold text-navy-900 mb-1">{{__('Apply Online')}}</h4>
+                            <p class="text-sm text-gray-500">{{__('Submit your application via our online portal or directly to the Admissions Office.')}}</p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-cream bg-gold-500 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow">2</div>
                         <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-5 rounded-xl bg-white shadow-sm border border-gray-100">
-                            <h4 class="font-bold text-navy-900 mb-1">Submit Documents</h4>
-                            <p class="text-sm text-gray-500">Upload all required documents, including your passport and transcripts.</p>
+                            <h4 class="font-bold text-navy-900 mb-1">{{__('Submit Documents')}}</h4>
+                            <p class="text-sm text-gray-500">{{__('Submit your application via our online portal or directly to the Admissions Office.')}}</p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-cream bg-navy-900 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow">3</div>
                         <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-5 rounded-xl bg-white shadow-sm border border-gray-100">
-                            <h4 class="font-bold text-navy-900 mb-1">Receive Acceptance</h4>
-                            <p class="text-sm text-gray-500">Once reviewed, receive your official acceptance letter and visa guidance.</p>
+                            <h4 class="font-bold text-navy-900 mb-1">{{__("Receive Acceptance")}}</h4>
+                            <p class="text-sm text-gray-500">{{__('Once reviewed, receive your official acceptance letter and visa guidance.')}}</p>
                         </div>
                     </div>
 
@@ -174,10 +174,10 @@
 <section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-16 scroll-reveal">
-            <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold mb-4">Integrate into Student Life</h2>
+            <h2 class="font-serif text-3xl md:text-4xl text-navy-900 font-bold mb-4">{{ __('Integrate into Student Life') }}</h2>
             <div class="w-24 h-1 bg-gold-500 mx-auto mb-6"></div>
             <p class="text-gray-600 leading-relaxed">
-                University is more than just academics. We highly encourage our international students to fully immerse themselves in the campus experience.
+               {{__(' University is more than just academics. We highly encourage our international students to fully immerse themselves in the campus experience.')}}
             </p>
         </div>
 
@@ -186,8 +186,8 @@
                 <div class="overflow-hidden rounded-2xl mb-6">
                     <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=600&q=80" alt="Groups" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
-                <h3 class="font-serif text-xl font-bold text-navy-900 mb-2">Cultural & Academic Groups</h3>
-                <p class="text-gray-500 text-sm">Join societies that celebrate diversity, debate ideas, and build lasting international networks.</p>
+                <h3 class="font-serif text-xl font-bold text-navy-900 mb-2">{{__("Cultural & Academic Groups")}}</h3>
+                <p class="text-gray-500 text-sm">{{__('Join societies that celebrate diversity, debate ideas, and build lasting international networks.')}}</p>
             </div>
             
             <div class="text-center group scroll-reveal" style="transition-delay: 0.2s">
@@ -195,8 +195,8 @@
                     {{-- Updated Image: Sports & Athletics --}}
                     <img src="https://images.unsplash.com/photo-1511886929837-354d827aae26?w=600&q=80" alt="Sports" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
-                <h3 class="font-serif text-xl font-bold text-navy-900 mb-2">Sports & Well-being</h3>
-                <p class="text-gray-500 text-sm">Engage in various sports and wellness activities designed to keep you physically and mentally fit.</p>
+                <h3 class="font-serif text-xl font-bold text-navy-900 mb-2">{{__('Sports & Well-being')}}</h3>
+                <p class="text-gray-500 text-sm">{{__('Engage in various sports and wellness activities designed to keep you physically and mentally fit.')}}</p>
             </div>
             
             <div class="text-center group scroll-reveal" style="transition-delay: 0.3s">
@@ -204,8 +204,8 @@
                     {{-- Updated Image: Community Outreach & Volunteering --}}
                     <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80" alt="Outreach" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
-                <h3 class="font-serif text-xl font-bold text-navy-900 mb-2">Community Outreach</h3>
-                <p class="text-gray-500 text-sm">Participate in local community programs to give back, connect with locals, and broaden your horizon.</p>
+                <h3 class="font-serif text-xl font-bold text-navy-900 mb-2">{{__('Community Outreach')}}</h3>
+                <p class="text-gray-500 text-sm">{{__('Participate in local community programs to give back, connect with locals, and broaden your horizon.')}}</p>
             </div>
         </div>
     </div>
@@ -215,10 +215,10 @@
 
 @section('cta-section')
     @include('components.cta-section', [
-        'title' => 'Ready to Start Your Journey?',
-        'description' => 'Take the next step in your academic career. Our international admissions team is ready to guide you.',
-        'primaryButton' => ['text' => 'Apply Online Now', 'icon' => 'fa-arrow-right', 'url' => route('apply')],
-        'secondaryButton' => ['text' => 'Contact Admissions', 'icon' => 'fa-envelope', 'url' => route('contact')]
+        'title' => __('Ready to Start Your Journey?'),
+        'description' => __('Take the next step in your academic career. Our international admissions team is ready to guide you.'),
+        'primaryButton' => ['text' => __('Apply Online Now'), 'icon' => 'fa-arrow-right', 'url' => route('apply')],
+        'secondaryButton' => ['text' => __('Contact Admissions'), 'icon' => 'fa-envelope', 'url' => route('contact')]
     ])
 @endsection
 

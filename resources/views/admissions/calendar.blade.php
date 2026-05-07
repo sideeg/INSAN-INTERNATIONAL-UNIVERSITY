@@ -1,19 +1,19 @@
 {{-- resources/views/admissions/calendar.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Academic Calendar ' . $selectedYear . ' | INSAN International University')
+@section('title', __('Academic Calendar :year | INSAN International University', ['year' => $selectedYear]))
 
 @section('content')
 
 @include('components.hero-section', [
     'backgroundImage' => 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1920&q=80',
-    'title' => 'Academic',
-    'highlightedText' => 'Calendar',
-    'description' => 'Stay on track with important dates, registration deadlines, examinations, and university holidays for the ' . $selectedYear . ' academic year.',
+    'title' => __('Academic'),
+    'highlightedText' => __('Calendar'),
+    'description' => __('Stay on track with important dates, registration deadlines, examinations, and university holidays for the :year academic year.', ['year' => $selectedYear]),
     'breadcrumbs' => [
-        ['label' => 'Home', 'url' => route('home')],
-        ['label' => 'Admissions', 'url' => route('admissions')],
-        ['label' => 'Academic Calendar']
+        ['label' => __('Home'), 'url' => route('home')],
+        ['label' => __('Admissions'), 'url' => route('admissions')],
+        ['label' => __('Academic Calendar')]
     ],
     'height' => '400px'
 ])
@@ -26,7 +26,7 @@
             
             <form action="{{ route('admissions.calendar') }}" method="GET" class="flex flex-wrap items-center gap-4 w-full md:w-auto">
                 <div class="flex items-center gap-2">
-                    <label class="text-sm font-bold text-navy-900"><i class="fas fa-calendar-alt text-gold-500"></i> Year:</label>
+                    <label class="text-sm font-bold text-navy-900"><i class="fas fa-calendar-alt text-gold-500"></i> {{ __('Year:') }}</label>
                     <select name="year" onchange="this.form.submit()" class="bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-lg focus:ring-gold-500 focus:border-gold-500 p-2.5">
                         @foreach($availableYears as $year)
                             <option value="{{ $year }}" {{ $selectedYear === $year ? 'selected' : '' }}>{{ $year }}</option>
@@ -35,9 +35,9 @@
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <label class="text-sm font-bold text-navy-900"><i class="fas fa-filter text-gold-500"></i> Filter:</label>
+                    <label class="text-sm font-bold text-navy-900"><i class="fas fa-filter text-gold-500"></i> {{ __('Filter:') }}</label>
                     <select name="category" onchange="this.form.submit()" class="bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-lg focus:ring-gold-500 focus:border-gold-500 p-2.5">
-                        <option value="all">All Events</option>
+                        <option value="all">{{ __('All Events') }}</option>
                         @foreach($categories as $key => $label)
                             <option value="{{ $key }}" {{ $selectedCategory === $key ? 'selected' : '' }}>{{ $label }}</option>
                         @endforeach
@@ -46,7 +46,7 @@
             </form>
 
             <a href="{{ route('admissions.calendar.export', ['year' => $selectedYear]) }}" target="_blank" class="btn-primary px-5 py-2.5 rounded-lg text-white font-semibold text-sm flex items-center gap-2 transition-all w-full md:w-auto justify-center">
-                <i class="fas fa-file-download"></i> Export Schedule
+                <i class="fas fa-file-download"></i> {{ __('Export Schedule') }}
             </a>
         </div>
 
@@ -56,9 +56,9 @@
                 <div class="w-20 h-20 mx-auto bg-gray-50 rounded-full flex items-center justify-center text-gray-400 mb-4 text-3xl">
                     <i class="fas fa-calendar-times"></i>
                 </div>
-                <h3 class="font-serif text-2xl text-navy-900 font-bold mb-2">No Events Found</h3>
-                <p class="text-gray-500">No calendar events published yet for {{ $selectedYear }} under this category.</p>
-                <a href="{{ route('admissions.calendar') }}" class="text-gold-600 hover:text-gold-700 font-semibold text-sm mt-4 inline-block underline">Clear Filters</a>
+                <h3 class="font-serif text-2xl text-navy-900 font-bold mb-2">{{ __('No Events Found') }}</h3>
+                <p class="text-gray-500">{{ __('No calendar events published yet for :year under this category.', ['year' => $selectedYear]) }}</p>
+                <a href="{{ route('admissions.calendar') }}" class="text-gold-600 hover:text-gold-700 font-semibold text-sm mt-4 inline-block underline">{{ __('Clear Filters') }}</a>
             </div>
         @else
             <div class="relative border-l-2 border-gold-500/30 ml-3 md:ml-6 space-y-12">

@@ -1,13 +1,13 @@
 @php
 $navItems = [
-    ['label' => 'Home', 'route' => 'home', 'active' => request()->routeIs('home')],
-    ['label' => 'About', 'route' => 'about', 'active' => request()->routeIs('about')],
-    ['label' => 'Academics', 'route' => 'programmes', 'active' => request()->routeIs('programmes')],
-    ['label' => 'Admissions', 'route' => 'admissions', 'active' => request()->routeIs('admissions')],
-    ['label' => 'International Students', 'route' => 'international', 'active' => request()->routeIs('international')],
-    ['label' => 'Campus Life', 'route' => 'campus-life', 'active' => request()->routeIs('campus-life')],
-    ['label' => 'News & Events', 'route' => 'events-news', 'active' => request()->routeIs('events-news')],
-    ['label' => 'Contact', 'route' => 'contact', 'active' => request()->routeIs('contact')],
+    ['label' => __('Home'), 'route' => 'home', 'active' => request()->routeIs('home')],
+    ['label' => __('About'), 'route' => 'about', 'active' => request()->routeIs('about')],
+    ['label' => __('Academics'), 'route' => 'programmes', 'active' => request()->routeIs('programmes')],
+    ['label' => __('Admissions'), 'route' => 'admissions', 'active' => request()->routeIs('admissions')],
+    ['label' => __('International Students'), 'route' => 'international', 'active' => request()->routeIs('international')],
+    ['label' => __('Campus Life'), 'route' => 'campus-life', 'active' => request()->routeIs('campus-life')],
+    ['label' => __('News & Events'), 'route' => 'events-news', 'active' => request()->routeIs('events-news')],
+    ['label' => __('Contact'), 'route' => 'contact', 'active' => request()->routeIs('contact')],
 ];
 @endphp
 
@@ -16,10 +16,10 @@ $navItems = [
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             <div class="flex items-center gap-3">
-                <img src="{{ asset('images/insan_logo.jpg') }}" alt="INSAN Logo" class="h-14 w-auto">
+                <img src="{{ asset('images/insan_logo.jpg') }}" alt="INSAN Logo" class="h-19 w-auto">
                 <div class="hidden sm:block">
-                    <h1 class="font-serif text-navy-900 font-bold text-lg leading-tight">INSAN</h1>
-                    <p class="text-xs text-gray-500 tracking-wider">INTERNATIONAL UNIVERSITY</p>
+                    <h1 class="font-serif text-navy-1000 font-bold text-lg leading-tight">INSAN</h1>
+                    <h1 class="text-xs text-gray-500 tracking-wider">INTERNATIONAL UNIVERSITY</h1>
                 </div>
             </div>
             <div class="hidden lg:flex items-center gap-8">

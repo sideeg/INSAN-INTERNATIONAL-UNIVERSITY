@@ -3,13 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\NewsArticle; // Changed from GalleryItem
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        // Fetch up to 5 published news articles for the hero slider.
+        // We order by 'is_featured' first, so featured articles always appear first,
+        // then by the latest published date.
+        $slides = NewsArticle::where('is_published', true)
+            ->orderBy('is_featured', 'desc')
+            ->orderBy('published_at', 'desc')
+            ->take(5)
+            ->get();
+
+        return view('home', compact('slides'));
     }
+
 
     public function about()
     {

@@ -1,30 +1,30 @@
 {{-- resources/views/components/footer.blade.php --}}
 @php
 $quickLinks = [
-    ['label' => 'Home', 'route' => 'home'],
-    ['label' => 'About Us', 'route' => 'about'],
-    ['label' => 'Academics', 'route' => 'programmes'],
-    ['label' => 'Admissions', 'route' => 'admissions'],
-    ['label' => 'Campus Life', 'route' => 'campus-life'],
-    ['label' => 'News & Events', 'route' => 'events-news'],
-    ['label' => 'Contact', 'route' => 'contact'],
+    ['label' => __('Home'), 'route' => 'home'],
+    ['label' => __('About Us'), 'route' => 'about'],
+    ['label' => __('Academics'), 'route' => 'programmes'],
+    ['label' => __('Admissions'), 'route' => 'admissions'],
+    ['label' => __('Campus Life'), 'route' => 'campus-life'],
+    ['label' => __('News & Events'), 'route' => 'events-news'],
+    ['label' => __('Contact'), 'route' => 'contact'],
 ];
 
 $academicLinks = [
-    ['label' => 'Academic Programmes', 'route' => 'programmes'],
-    ['label' => 'Academic Calendar', 'route' => 'admissions.calendar'],
-    ['label' => 'Collaborations & Partners', 'route' => 'about.collaborations'],
-    ['label' => 'Graduation Archive', 'route' => 'about.graduation'],
-    ['label' => 'Photo & Video Gallery', 'route' => 'gallery'],
+    ['label' => __('Academic Programmes'), 'route' => 'programmes'],
+    ['label' => __('Academic Calendar'), 'route' => 'admissions.calendar'],
+    ['label' => __('Collaborations & Partners'), 'route' => 'about.collaborations'],
+    ['label' => __('Graduation Archive'), 'route' => 'about.graduation'],
+    ['label' => __('Photo & Video Gallery'), 'route' => 'gallery'],
 ];
 
 $admissionLinks = [
-    ['label' => 'How to Apply', 'route' => 'apply'],
-    ['label' => 'Admission Requirements', 'route' => 'admissions'],
-    ['label' => 'Important Deadlines', 'route' => 'admissions.calendar'],
-    ['label' => 'Fees & Funding', 'route' => 'admissions.fees'],
-    ['label' => 'Scholarships', 'route' => 'admissions.scholarships'],
-    ['label' => 'International Students', 'route' => 'international'],
+    ['label' => __('How to Apply'), 'route' => 'apply'],
+    ['label' => __('Admission Requirements'), 'route' => 'admissions'],
+    ['label' => __('Important Deadlines'), 'route' => 'admissions.calendar'],
+    ['label' => __('Fees & Funding'), 'route' => 'admissions.fees'],
+    ['label' => __('Scholarships'), 'route' => 'admissions.scholarships'],
+    ['label' => __('International Students'), 'route' => 'international'],
 ];
 
 $socialLinks = [
@@ -44,11 +44,11 @@ $socialLinks = [
                 <div class="flex items-center gap-3 mb-6">
                     <img src="{{ asset('images/insan_logo.jpg') }}" alt="INSAN Logo" class="h-16 w-auto rounded-lg">
                     <div>
-                        <h3 class="font-serif text-white font-bold text-xl">INSAN</h3>
-                        <p class="text-gray-400 text-xs tracking-wider uppercase">International University</p>
+                        <h3 class="font-serif text-white font-bold text-xl">{{__('INSAN')}}</h3>
+                        <p class="text-gray-400 text-xs tracking-wider uppercase">{{__('International University') }}</p>
                     </div>
                 </div>
-                <p class="text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">Empowering education rooted in Islamic values and global excellence.</p>
+                <p class="text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">{{__('Empowering education rooted in Islamic values and global excellence.')}}</p>
                 <div class="flex gap-3">
                     @foreach($socialLinks as $social)
                         <a href="{{ $social['url'] }}" aria-label="{{ $social['label'] }}" 
@@ -61,7 +61,7 @@ $socialLinks = [
             
             <!-- Quick Links -->
             <div>
-                <h4 class="text-white font-bold mb-4 font-serif text-lg">Quick Links</h4>
+                <h4 class="text-white font-bold mb-4 font-serif text-lg">{{ __('Quick Links') }}</h4>
                 <ul class="space-y-3">
                     @foreach($quickLinks as $link)
                         <li>
@@ -76,7 +76,7 @@ $socialLinks = [
             
             <!-- Academics -->
             <div>
-                <h4 class="text-white font-bold mb-4 font-serif text-lg">Academics</h4>
+                <h4 class="text-white font-bold mb-4 font-serif text-lg">{{ __('Academics') }}</h4>
                 <ul class="space-y-3">
                     @foreach($academicLinks as $link)
                         <li>
@@ -91,7 +91,7 @@ $socialLinks = [
             
             <!-- Admissions -->
             <div>
-                <h4 class="text-white font-bold mb-4 font-serif text-lg">Admissions</h4>
+                <h4 class="text-white font-bold mb-4 font-serif text-lg">{{ __('Admissions') }}</h4>
                 <ul class="space-y-3">
                     @foreach($admissionLinks as $link)
                         <li>
@@ -127,12 +127,12 @@ $socialLinks = [
                     </div>
                 </div>
                 <div class="flex justify-start md:justify-end gap-6 text-sm">
-                    <a href="#" class="text-gray-400 hover:text-gold-500 transition-colors">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-gold-500 transition-colors">Terms & Conditions</a>
+                    <a href="#" class="text-gray-400 hover:text-gold-500 transition-colors">{{ __('Privacy Policy') }}</a>
+                    <a href="#" class="text-gray-400 hover:text-gold-500 transition-colors">{{__('Terms & Conditions') }}</a>
                 </div>
             </div>
             <div class="mt-8 text-center text-gray-500 text-sm">
-                &copy; {{ date('Y') }} {{ config('university.name', 'INSAN International University') }}. All Rights Reserved.
+                &copy; {{ date('Y') }} {{ config('university.name', 'INSAN International University') }}. {{__('All Rights Reserved.')}}.
             </div>
         </div>
     </div>

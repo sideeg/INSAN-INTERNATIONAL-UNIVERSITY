@@ -150,8 +150,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
                 <div class="scroll-reveal">
-                    <h2 class="font-serif text-3xl text-navy-900 font-bold mb-2">Multimedia Gallery</h2>
-                    <p class="text-gray-600">Explore our campus, events, and community through photos and videos.</p>
+                    <h2 class="font-serif text-3xl text-navy-900 font-bold mb-2">{{__("Multimedia Gallery")}}</h2>
+                    <p class="text-gray-600">{{__("Explore our campus, events, and community through photos and videos.")}}</p>
                 </div>
                 <div class="flex flex-wrap gap-2 scroll-reveal">
                     <span class="filter-chip active px-4 py-2 rounded-full border border-gray-200 text-sm font-medium" data-gallery-filter="all">All Media</span>
@@ -319,6 +319,35 @@
 
 @section('page-scripts')
 <script>
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active classes from all buttons
+            tabBtns.forEach(b => {
+                b.classList.remove('active');
+                // Adjust colors if you're swapping them out on active state
+                // e.g., b.classList.add('bg-white', 'text-navy-900'); 
+            });
+            
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            // Hide all contents
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+                content.style.display = 'none'; // Ensure it's hidden
+            });
+
+            // Show target content
+            const targetId = btn.getAttribute('data-tab');
+            const targetContent = document.getElementById(targetId);
+            if(targetContent) {
+                targetContent.classList.add('active');
+                targetContent.style.display = 'block';
+            }
+        });
     const eventData = @json($eventData ?? []);
 
     // Helper function to safely get DOM elements without repeating code

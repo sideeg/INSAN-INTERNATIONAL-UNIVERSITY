@@ -1,7 +1,7 @@
 {{-- resources/views/about/index.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'About Us — INSAN International University')
+@section('title', __('About Us — INSAN International University'))
 
 @section('content')
 
@@ -12,18 +12,16 @@
         <div class="grid md:grid-cols-2 gap-8">
             <div class="bg-[#003366] text-white rounded-2xl p-8">
                 <div class="text-3xl mb-3">🎯</div>
-                <h2 class="text-xl font-bold mb-3">Our Mission</h2>
+                <h2 class="text-xl font-bold mb-3">{{ __('Our Mission') }}</h2>
                 <p class="text-blue-100 leading-relaxed">
-                    To provide quality higher education that develops competent, ethical, and
-                    innovative graduates who contribute positively to Sudan and the global community.
+                    {{ __('To provide quality higher education that develops competent, ethical, and innovative graduates who contribute positively to Sudan and the global community.') }}
                 </p>
             </div>
             <div class="bg-amber-50 border border-amber-200 rounded-2xl p-8">
                 <div class="text-3xl mb-3">🔭</div>
-                <h2 class="text-xl font-bold text-gray-800 mb-3">Our Vision</h2>
+                <h2 class="text-xl font-bold text-gray-800 mb-3">{{ __('Our Vision') }}</h2>
                 <p class="text-gray-600 leading-relaxed">
-                    To be a leading international university in Africa and the Arab world, recognised
-                    for excellence in teaching, research, and community engagement.
+                    {{ __('To be a leading international university in Africa and the Arab world, recognised for excellence in teaching, research, and community engagement.') }}
                 </p>
             </div>
         </div>
@@ -32,7 +30,7 @@
     {{-- ── VC Welcome snippet ───────────────────────────── --}}
     @if ($vcProfile)
     <section class="mb-16">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">A Word from the Vice Chancellor</h2>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ __('A Word from the Vice Chancellor') }}</h2>
         <div class="flex flex-col md:flex-row gap-8 bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
             <div class="shrink-0">
                 <img src="{{ $vcProfile->portrait_url }}"
@@ -47,7 +45,7 @@
                 <p class="text-sm text-[#003366]">{{ $vcProfile->title }}</p>
                 <a href="{{ route('about.vice-chancellor') }}"
                    class="inline-block mt-4 text-sm font-medium text-[#003366] underline underline-offset-4 hover:text-blue-800">
-                    Read full profile →
+                    {{ __('Read full profile') }} →
                 </a>
             </div>
         </div>
@@ -58,9 +56,9 @@
     @if ($leadershipSnapshot->isNotEmpty())
     <section class="mb-16">
         <div class="flex items-center justify-between mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Our Leadership</h2>
+            <h2 class="text-2xl font-bold text-gray-800">{{ __('Our Leadership') }}</h2>
             <a href="{{ route('about.leadership') }}" class="text-sm text-[#003366] font-medium hover:underline">
-                View all →
+                {{ __('View all') }} →
             </a>
         </div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -81,9 +79,9 @@
     @if ($featuredPartners->isNotEmpty())
     <section class="mb-16">
         <div class="flex items-center justify-between mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Our Partners</h2>
+            <h2 class="text-2xl font-bold text-gray-800">{{ __('Our Partners') }}</h2>
             <a href="{{ route('about.collaborations') }}" class="text-sm text-[#003366] font-medium hover:underline">
-                View all →
+                {{ __('View all') }} →
             </a>
         </div>
         <div class="flex flex-wrap gap-6 items-center">
@@ -106,9 +104,9 @@
         <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-2xl p-8 flex flex-col md:flex-row items-center gap-6">
             <div class="text-5xl">🎓</div>
             <div class="flex-1">
-                <p class="text-sm uppercase tracking-widest text-amber-100 mb-1">Graduation</p>
+                <p class="text-sm uppercase tracking-widest text-amber-100 mb-1">{{ __('Graduation') }}</p>
                 <h2 class="text-xl font-bold mb-2">
-                    {{ $latestConvocation->ordinal ? $latestConvocation->ordinal . ' Convocation' : $latestConvocation->title }}
+                    {{ $latestConvocation->ordinal ? $latestConvocation->ordinal . ' ' . __('Convocation') : $latestConvocation->title }}
                 </h2>
                 @if ($latestConvocation->ceremony_date)
                 <p class="text-amber-100 text-sm">
@@ -119,7 +117,7 @@
             </div>
             <a href="{{ route('about.graduation.show', $latestConvocation->slug) }}"
                class="shrink-0 bg-white text-orange-600 font-semibold text-sm px-6 py-3 rounded-lg hover:bg-orange-50 transition-colors">
-                View Details
+                {{ __('View Details') }}
             </a>
         </div>
     </section>

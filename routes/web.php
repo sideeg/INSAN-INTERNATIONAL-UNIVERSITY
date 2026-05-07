@@ -17,7 +17,12 @@ use App\Http\Controllers\AdmissionsController;
 | INSAN International University Routes
 |--------------------------------------------------------------------------
 */
-
+Route::get('lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'ar'])) {
+        session()->put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('lang.switch');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 

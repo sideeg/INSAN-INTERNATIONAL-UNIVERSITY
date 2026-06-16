@@ -30,7 +30,7 @@ A modern, bilingual, and fully dynamic university web portal and administration 
 | :-------------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
 | <img src="docs/screenshots/home.png" width="400" alt="Homepage Screenshot"> | <img src="docs/screenshots/dashboard.png" width="400" alt="Admin Dashboard"> |
 |                           **Academic Programmes**                           |                        **Bilingual Content Editing**                         |
-|  <img src="docs/screenshots/programmes.png" width="400" alt="Programmes">   | <img src="docs/screenshots/translations.png" width="400" alt="Translations"> |
+|  <img src="docs/screenshots/programmes.png" width="400" alt="Programmes">   |   <img src="docs/screenshots/acadmic.jpg" width="400" alt="Translations">    |
 
 ---
 
